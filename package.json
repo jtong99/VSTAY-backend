@@ -7,13 +7,14 @@
     "start": "nodemon src/index.js",
     "docker:dev": "sudo docker-compose -f docker-compose.yml -f docker-compose.dev.yml up",
     "commit": "git add -A && git commit -m",
-    "eslint-check": "eslint --print-config pages/index.jsx | eslint-config-prettier-check",
+    "eslint-check": "eslint --print-config src/index.jsx | eslint-config-prettier-check",
     "docker:prod": "docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d",
     "docker:stop": "docker-compose down"
   },
   "lint-staged": {
     "**/*.(js)": [
-      "eslint --fix"
+      "eslint --fix",
+      "git add"
     ]
   },
   "eslintIgnore": [
