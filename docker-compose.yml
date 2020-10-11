@@ -1,0 +1,26 @@
+version: "3.7"
+services:
+  backend:
+    container_name: vstay-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - ./.env
+    environment:
+      - DB_URI=mongodb://mongo:27017/vstay-db
+      - DB_HOST=mongo
+      - DB_PORT=27017
+    restart: always
+    links:
+      - mongo
+  mongo:
+    image: mongo:4.2
+    container_name: vstay-db
+    restart: always
+    volumes:
+      - "./data/mongo:/data/db"
+    environment:
+      - DB_HOST=mongo
+      - DB_PORT=27017
+    command: mongod

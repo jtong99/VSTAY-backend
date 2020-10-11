@@ -1,0 +1,14 @@
+# node modules
+node_modules
+dist
+
+# environment files
+.env
+
+# docker mounted volumes
+/docker
+/.docker
+/data
+/.data
+.idea
+yarn.lock

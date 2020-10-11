@@ -1,0 +1,18 @@
+version: "3.7"
+services:
+  backend:
+    environment:
+      - NODE_ENV=production
+      - DB_URI=mongodb://mongo:27017/v-stay-db
+      - DB_HOST=mongo
+      - DB_PORT=27017
+    container_name: vstay_api_prod
+    image: vstay/api
+    command: node src/index.js
+    expose:
+      - 4000
+    # volumes:
+    #   - ".:/app"
+  mongo:
+    expose:
+      - 27017
