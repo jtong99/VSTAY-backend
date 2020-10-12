@@ -17,7 +17,6 @@ Make sure following command available on your system:
 
 Recommend VSCode Extension:
 
-- GraphQL
 - EditorConfig for VS Code
 
 ## Commit message syntax
