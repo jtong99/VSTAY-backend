@@ -40,6 +40,7 @@ module.exports.domain = {
 
 module.exports.Models = {
   USER: "user",
+  REFRESH_TOKEN: "refreshToken",
 };
 
 module.exports.services = {

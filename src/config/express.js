@@ -5,6 +5,8 @@ const app = express();
 
 const error = require("../api/middlewares/error");
 
+const Router = require("../api/routes");
+
 app.use(bodyParser.json());
 app.use(
   bodyParser.urlencoded({
@@ -14,6 +16,8 @@ app.use(
 
 // enable CORS in Header
 app.use(cors());
+
+app.use(Router);
 
 app.use(error.converter);
 
