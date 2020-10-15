@@ -24,6 +24,7 @@ const sendMail = async ({
   };
 
   const result = await sgMail.send(message);
+  console.log(result);
 
   if (result.statusCode < 200 && result.statusCode >= 300) {
     throw new APIError({
@@ -180,7 +181,7 @@ const emailVerification = async ({
     });
     return result;
   } catch (error) {
-    logger.error("Error sending verification email: " + JSON.stringify(error));
+    console.log("Error sending verification email: " + JSON.stringify(error));
     throw new APIError({
       message: "Error sending verification email",
       status: 500,

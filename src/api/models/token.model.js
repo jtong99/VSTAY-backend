@@ -140,6 +140,54 @@ class Token extends BaseModel {
       });
     }
   }
+  async updateOrCreateTokenByUserId(
+    _id,
+    { payload, expiresIn = this.refreshTokenExpiration }
+  ) {
+    try {
+      const secretKey = this.secretKey;
+      const { user, agent } = payload;
+      const userId = user._id;
+
+      const { token, iat, exp } = await this.generateToken({
+        payload: userId,
+        secretKey,
+        expiresIn,
+        expiresUnit: "hour",
+      });
+
+      const updatedUser = await this.collection.findOneAndUpdate(
+        {
+          userId: { $eq: userId },
+          "user-agent": agent,
+        },
+        {
+          $set: {
+            "user-agent": agent,
+            value: token,
+            iat: iat,
+            exp: exp,
+            userId: userId,
+            updatedAt: format(new Date(), "yyyy-MM-dd'T'HH:mm:sszzzz"),
+          },
+        },
+        {
+          returnOriginal: false,
+          upsert: true,
+        }
+      );
+
+      return updatedUser.value;
+    } catch (error) {
+      throw new APIError({
+        message: error.message || "Error generating access token",
+        status: error.status || httpStatus.INTERNAL_SERVER_ERROR,
+        stack: error.stack || error.stack,
+        isPublic: error.isPublic || false,
+        errors: error.errors,
+      });
+    }
+  }
 }
 
 module.exports = Token;

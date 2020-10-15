@@ -84,7 +84,7 @@ class User extends BaseModel {
         email: email,
         name,
         password: hashedPassword,
-        role: UserRolesEnum.FREEPOP,
+        role: UserRolesEnum.FREE,
         status: UserStatusEnum.ACTIVE,
         about: "",
         avatar: avatar ? avatar : generateFakeAvatar(name),

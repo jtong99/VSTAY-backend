@@ -16,6 +16,8 @@ const { accessTokenExpiration, refreshTokenExpiration } = secretOrPrivateKey;
 
 const fbAdmin = require("../libs/firebase");
 
+const { getUserAgent } = require("../helpers/hardware");
+
 module.exports.signupProd = async (req, res, next) => {
   const { db } = req.app.locals;
 
@@ -76,7 +78,6 @@ module.exports.signupProd = async (req, res, next) => {
       };
       const expiration = formatTimeIn8601(registrationToken.exp);
       const sendEmailResult = await sendVerificationEmail(maildata);
-      console.log(sendEmailResult);
       const response = {
         code: httpStatus.OK,
         message: "Verification code is sent, please check your mailbox.",
@@ -213,6 +214,70 @@ module.exports.signupVerify = async (req, res, next) => {
     console.log(user);
     return res.status(httpStatus.FOUND).redirect(successfullRedirect);
   } catch (error) {
+    next(error);
+  }
+};
+
+module.exports.signin = async (req, res, next) => {
+  const { db } = req.app.locals;
+  const { Token } = new Model({ db });
+
+  const user = req.middleware.user;
+  const rememberMe = _.get(req.query, "remember-me", false);
+  const rememberMeRefreshTokenExpiration = 24 * 7;
+  const useragent = getUserAgent(req);
+
+  try {
+    const { accessToken, refreshToken, firebaseToken } = await Promise.all([
+      Token.generateToken({
+        payload: user._id,
+        expiresIn: parseInt(accessTokenExpiration),
+        expiresUnit: "minute",
+      }),
+      Token.updateOrCreateTokenByUserId(user._id, {
+        payload: {
+          user,
+          agent: useragent,
+        },
+        expiresIn: rememberMe
+          ? rememberMeRefreshTokenExpiration
+          : parseInt(refreshTokenExpiration),
+      }),
+      fbAdmin.auth().createCustomToken(`${user._id}`),
+    ]).then((promises) => ({
+      accessToken: promises[0],
+      refreshToken: promises[1],
+      firebaseToken: promises[2],
+    }));
+
+    const response = {
+      code: httpStatus.OK,
+      message: "OK",
+      accessToken: {
+        value: "Bearer " + accessToken.token,
+        iat: accessToken.iat,
+        exp: accessToken.exp,
+      },
+      refreshToken: {
+        value: "Bearer " + refreshToken.value,
+        iat: refreshToken.iat,
+        exp: refreshToken.exp,
+      },
+      firebaseToken,
+      user: {
+        _id: user._id,
+        status: user.status,
+        role: user.role,
+        name: user.name,
+        email: user.email,
+        avatar: user.avatar,
+        createdAt: user.createdAt,
+      },
+    };
+
+    return res.status(response.code).json(response).end();
+  } catch (error) {
+    console.log(error);
     next(error);
   }
 };

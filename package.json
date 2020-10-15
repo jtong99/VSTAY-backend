@@ -44,7 +44,9 @@
     "http-status": "^1.4.2",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.20",
-    "mongo": "^0.1.0"
+    "mongo": "^0.1.0",
+    "useragent": "^2.3.0",
+    "validator": "^13.1.17"
   },
   "devDependencies": {
     "@commitlint/cli": "^11.0.0",
