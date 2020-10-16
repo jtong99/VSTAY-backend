@@ -20,8 +20,7 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: ubuntu-latest
+      - uses: actions/checkout@master
 
       - name: Before script
-        run: |
-          ssh -i ${{ secrets.VSTAY_API_KEY }} ${{ secrets.VSTAY_API_USER }}@${{ secrets.VSTAY_API_HOST }}
+        run: ssh -i ${{ secrets.VSTAY_API_KEY }} ${{ secrets.VSTAY_API_USER }}@${{ secrets.VSTAY_API_HOST }}
