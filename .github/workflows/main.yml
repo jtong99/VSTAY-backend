@@ -31,7 +31,6 @@ jobs:
           zip vstay-api.zip vstay-api.tar
       - name: Deploy
         run: |
-          echo ${{ secrets.VSTAY_API_KEY }}
           apt-get update -y"which ssh-agent || ( apt-get install -y openssh-client )"
           eval $(ssh-agent -s)
           echo ${{ secrets.VSTAY_API_KEY }} | tr -d '\r' | ssh-add -
