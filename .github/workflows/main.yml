@@ -21,6 +21,10 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: docker/setup-buildx-action@v1
+      - with:
+          dockerfile: Dockerfile
+          repository: my/repository
+          tag_with_ref: true
 
       # Runs a single command using the runners shell
       - name: Before script
