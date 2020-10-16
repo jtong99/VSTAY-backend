@@ -20,15 +20,8 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: docker/setup-buildx-action@v1
-        with:
-          dockerfile: Dockerfile
-          repository: my/repository
-          tag_with_ref: true
+      - uses: ubuntu-latest
 
-      # Runs a single command using the runners shell
       - name: Before script
         run: |
-          docker build --build-arg NODE_ENV=production -t vstay/api .
-          docker save -o vstay-api.tar vstay/api
-          zip vstay-api.zip vstay-api.tar
+          ssh -i ${{ secrets.VSTAY_API_KEY }} ${{ secrets.VSTAY_API_USER }}@${{ secrets.VSTAY_API_HOST }}
