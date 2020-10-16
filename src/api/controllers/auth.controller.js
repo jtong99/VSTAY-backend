@@ -252,7 +252,7 @@ module.exports.signin = async (req, res, next) => {
 
     const response = {
       code: httpStatus.OK,
-      message: "OK",
+      message: "OKK",
       accessToken: {
         value: "Bearer " + accessToken.token,
         iat: accessToken.iat,
