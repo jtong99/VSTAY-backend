@@ -23,12 +23,6 @@ jobs:
       - uses: actions/checkout@v2
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-
-      - name: Before script
-        run: |
-          docker build --build-arg NODE_ENV=production -t vstay/api .
-          docker save -o vstay-api.tar vstay/api
-          zip vstay-api.zip vstay-api.tar
       - name: Deploy
         run: |
           sudo apt-get update -y 
@@ -36,3 +30,9 @@ jobs:
           eval $(ssh-agent -s)
           echo ${{ secrets.VSTAY_API_KEY }} | tr -d '\r' | ssh-add -
           mkdir -p /.ssh
+
+      - name: Before script
+        run: |
+          docker build --build-arg NODE_ENV=production -t vstay/api .
+          docker save -o vstay-api.tar vstay/api
+          zip vstay-api.zip vstay-api.tar
