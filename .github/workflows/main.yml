@@ -29,7 +29,12 @@ jobs:
           docker build --build-arg NODE_ENV=production -t vstay/api .
           docker save -o vstay-api.tar vstay/api
           zip vstay-api.zip vstay-api.tar
-      - name: Deploy
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: deploy
         run: |
           sudo apt-get update -y 
           which ssh-agent || ( apt-get install -y openssh-client )
