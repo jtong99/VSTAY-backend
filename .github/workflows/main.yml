@@ -23,4 +23,4 @@ jobs:
       - uses: actions/checkout@master
 
       - name: Before script
-        run: ssh -i ${{ secrets.VSTAY_API_KEY }} ${{ secrets.VSTAY_API_USER }}@${{ secrets.VSTAY_API_HOST }}
+        run: ssh ${{ secrets.VSTAY_API_USER }}@${{ secrets.VSTAY_API_HOST }}
