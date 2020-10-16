@@ -7,7 +7,7 @@ COPY package*.json ./
 RUN if [ "$NODE_ENV" = "production" ]; \
     then npm install --only=production; \
     else npm install \
-    && npm install -g nodemon \
+    && npm install -g nodemon; \
     fi;
 
 RUN npm audit fix
