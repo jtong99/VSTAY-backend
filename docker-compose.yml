@@ -2,6 +2,8 @@ version: "3.7"
 services:
   backend:
     container_name: vstay-api
+    ports:
+      - "4000:4000"
     build:
       context: .
       dockerfile: Dockerfile
