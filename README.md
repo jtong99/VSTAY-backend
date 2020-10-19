@@ -48,8 +48,8 @@ Targets: name of functions, attributes or objects...
 
 ## Deploy instructions
 Server connection
-ssh duc-admin@52.188.5.240
-Password:
+ssh duc-admin@40.75.0.139
+Password: Minhduc1909@
 
 Minhduc1909@
 
