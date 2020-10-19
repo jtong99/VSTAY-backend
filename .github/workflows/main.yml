@@ -37,4 +37,5 @@ jobs:
           username: ${{ secrets.VSTAY_API_USER }}
           password: ${{ secrets.VSTAY_API_PASSWORD }}
           port: ${{ secrets.VSTAY_API_PORT }}
-          script: whoami
+          script: |
+            scp -P ${{ secrets.VSTAY_API_PORT }} vstay-api.zip ${{ secrets.VSTAY_API_USER }}@${{ secrets.VSTAY_API_HOST }}:${{ secrets.VSTAY_API_WORKDIR }}/api
