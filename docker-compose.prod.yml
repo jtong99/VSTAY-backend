@@ -11,8 +11,8 @@ services:
     command: node src/index.js
     expose:
       - 4000
-    # volumes:
-    #   - ".:/app"
+    volumes:
+      - ".:/app"
   mongo:
     expose:
       - 27017
