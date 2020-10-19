@@ -56,7 +56,7 @@ jobs:
           password: ${{ secrets.VSTAY_API_PASSWORD }}
           port: ${{ secrets.VSTAY_API_PORT }}
           script: |
-            cd ${{ secrets.VSTAY_API_WORKDIR }}/api
+            cd ${{ secrets.VSTAY_API_WORKDIR }}
             unzip vstay-api.zip
             docker image rm -f vstay/api:latest
             cat vstay-api.tar | docker load
