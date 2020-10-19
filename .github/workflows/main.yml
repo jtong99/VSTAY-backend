@@ -48,9 +48,8 @@ jobs:
           port: ${{ secrets.VSTAY_API_PORT }}
           script: |
             cd ${{ secrets.VSTAY_API_WORKDIR }}/vstay-backend
-            pwd
-          #  git pull
-          #  docker-compose down
-          #  docker image rm -f vstay/api:latest
-          #  docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
-          #  rm vstay-api.*
+            git pull
+            docker-compose down
+            docker image rm -f vstay/api:latest
+            docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+            rm vstay-api.*
