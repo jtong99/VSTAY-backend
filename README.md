@@ -45,12 +45,18 @@ Targets: name of functions, attributes or objects...
 - Always run app with defined scripts.
 - Commit with the messages point to what you have been done within that commit.
 
+## Copy .env
+
+```
+cp .env.example .env
+```
+
 ## Deploy instructions
 
 Server connection
 
 ```
-ssh duc-admin@40.75.0.139
+ssh duc-root@40.75.0.139
 ```
 
 Password:
