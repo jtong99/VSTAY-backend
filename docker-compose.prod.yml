@@ -9,8 +9,6 @@ services:
     container_name: vstay_api_prod
     image: vstay/api
     command: node src/index.js
-    ports:
-      - 4000:4000
     expose:
       - 4000
     volumes:
