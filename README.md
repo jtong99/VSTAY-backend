@@ -23,7 +23,6 @@ Recommend VSCode Extension:
 
 tag: [action] [target]
 
-
 Tags:
 'feat',
 'fix',
@@ -47,12 +46,22 @@ Targets: name of functions, attributes or objects...
 - Commit with the messages point to what you have been done within that commit.
 
 ## Deploy instructions
-Server connection
-ssh duc-admin@40.75.0.139
-Password: Minhduc1909@
 
+Server connection
+
+```
+ssh duc-admin@40.75.0.139
+```
+
+Password:
+
+```
 Minhduc1909@
+```
 
 Sendgrid infor
+
+```
 tmduc0908@gmail.com
 tongminhduc1909@
+```
