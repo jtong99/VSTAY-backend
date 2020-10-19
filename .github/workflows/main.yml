@@ -58,7 +58,7 @@ jobs:
           script: |
             cd ${{ secrets.VSTAY_API_WORKDIR }}
             unzip vstay-api.zip
-            docker image rm -f vstay/api:latest
+            docker image rm -f vstay/api
             cat vstay-api.tar | docker load
             rm vstay-api.*
             sudo docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
