@@ -47,9 +47,9 @@ jobs:
           password: ${{ secrets.VSTAY_API_PASSWORD }}
           port: ${{ secrets.VSTAY_API_PORT }}
           script: |
-            cd ${{ secrets.VSTAY_API_WORKDIR }}
-            unzip vstay-api.zip
+            cd ${{ secrets.VSTAY_API_WORKDIR }}/vstay-backend
+            git pull
+            docker-compose down
             docker image rm -f vstay/api:latest
-            cat vstay-api.tar | docker load
             docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
           #  rm vstay-api.*
