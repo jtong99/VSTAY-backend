@@ -61,4 +61,4 @@ jobs:
             docker image rm -f vstay/api:latest
             cat vstay-api.tar | docker load
             rm vstay-api.*
-            docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+            sudo docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
