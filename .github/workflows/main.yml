@@ -31,7 +31,7 @@ jobs:
           script: |
             cd ${{ secrets.VSTAY_API_WORKDIR }}/vstay-backend
             git pull
-            sudo docker-compose down
-            Minhduc1909@
-            sudo docker image rm -f vstay/api:latest
-            sudo docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+            npm install
+            docker-compose down
+            docker image rm -f vstay/api:latest
+            docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
