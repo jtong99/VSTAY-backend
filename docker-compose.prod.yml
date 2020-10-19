@@ -16,3 +16,7 @@ services:
   mongo:
     expose:
       - 27017
+networks:
+  default:
+    external:
+      name: nginx-proxy
