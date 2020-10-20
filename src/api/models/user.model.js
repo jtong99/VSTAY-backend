@@ -20,7 +20,7 @@ async function hashPassword(password) {
     return await bcrypt.hash(password, saltRounds);
   } catch (error) {
     throw new APIError({
-      message: "Error hashing user password",
+      message: "Errors hashing user password",
       status: httpStatus.INTERNAL_SERVER_ERROR,
       stack: error.stack,
       isPublic: false,
