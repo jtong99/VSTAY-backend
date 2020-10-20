@@ -31,6 +31,7 @@ jobs:
           script: |
             cd ${{ secrets.VSTAY_API_WORKDIR }}/vstay-backend
             git pull
+            cp .env.example .env
             npm install
             docker-compose down
             docker image rm -f vstay/api:latest
