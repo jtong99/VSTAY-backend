@@ -54,7 +54,7 @@ const validateSignupInput = (req, res, next) => {
       errors.push({
         field: "name",
         location: "body",
-        message: "name field must not contain symbol character",
+        message: "names field must not contain symbol character",
       });
     }
 
