@@ -10,10 +10,21 @@ dotenv.config({
 const env = process.env.NODE_ENV;
 const port = process.env.PORT;
 const db = {
+  host: process.env.DB_HOST,
   name: process.env.DB_NAME,
+  port: process.env.DB_PORT,
+  name: process.env.DB_NAME,
+  user: {
+    name: process.env.DB_USER_RW_NAME,
+    pwd: process.env.DB_USER_RW_PWD,
+  },
 };
 
-const databaseUri = process.env.DATABASE_URL;
+const databaseUri =
+  env === EnvHostingEnum.DEVELOPMENT
+    ? process.env.DATABASE_URL
+    : `mongodb://${db.user.name}:${db.user.pwd}@${db.host}:${db.port}/${db.name}?authSource=admin`;
+
 module.exports = {
   env,
   port,
