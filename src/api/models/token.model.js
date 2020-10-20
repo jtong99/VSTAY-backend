@@ -180,7 +180,7 @@ class Token extends BaseModel {
       return updatedUser.value;
     } catch (error) {
       throw new APIError({
-        message: error.message || "Error generating access token",
+        message: error.message || "Errors generating access token",
         status: error.status || httpStatus.INTERNAL_SERVER_ERROR,
         stack: error.stack || error.stack,
         isPublic: error.isPublic || false,
