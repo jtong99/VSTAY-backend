@@ -188,6 +188,31 @@ class Token extends BaseModel {
       });
     }
   }
+  async getTokenByValue(token) {
+    try {
+      const refreshToken = await this.collection.findOne({
+        value: {
+          $eq: token,
+        },
+      });
+
+      return refreshToken;
+    } catch (error) {
+      throw new APIError({
+        message: error.message || "Error getting refresh token by user id",
+        status: error.status || httpStatus.INTERNAL_SERVER_ERROR,
+        stack: error.stack,
+        isPublic: error.isPublic || false,
+        errors: [
+          {
+            field: "",
+            location: "",
+            message: "",
+          },
+        ],
+      });
+    }
+  }
 }
 
 module.exports = Token;

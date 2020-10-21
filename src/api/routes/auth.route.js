@@ -5,6 +5,7 @@ const {
   signupDev,
   signupVerify,
   signin,
+  refreshToken,
 } = require("../controllers/auth.controller");
 
 const {
@@ -20,5 +21,7 @@ Router.route("/signup/dev").post(validateSignupInput, signupDev);
 Router.route("/signup/prod/create").get(signupVerify);
 
 Router.route("/signin").post(validateSigninInput, checkUserEmail, signin);
+
+Router.route("/refresh-token").get(refreshToken);
 
 module.exports = Router;

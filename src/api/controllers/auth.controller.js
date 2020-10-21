@@ -281,3 +281,58 @@ module.exports.signin = async (req, res, next) => {
     next(error);
   }
 };
+
+module.exports.refreshToken = async (req, res, next) => {
+  const { db } = req.app.locals;
+  const { Token } = new Model({ db });
+  const token = _.get(req.headers, "x-refresh-token", "");
+  const refreshTokenValue = token.slice(7, token.length);
+  try {
+    if (Token.verifyToken(refreshTokenValue) === false) {
+      return res
+        .status(httpStatus.UNAUTHORIZED)
+        .json({
+          code: httpStatus.UNAUTHORIZED,
+          message: "Unauthorized",
+        })
+        .end();
+    }
+
+    const refreshToken = await Token.getTokenByValue(refreshTokenValue);
+    if (!refreshToken) {
+      return res
+        .status(httpStatus.NOT_FOUND)
+        .json({
+          code: httpStatus.NOT_FOUND,
+          message: "No token found",
+        })
+        .end();
+    }
+
+    const newAccessToken = await Token.generateToken({
+      payload: refreshToken.userId,
+      expiresIn: parseInt(accessTokenExpiration),
+      expiresUnit: "minute",
+    });
+
+    return res
+      .status(httpStatus.CREATED)
+      .json({
+        code: httpStatus.CREATED,
+        message: "New access token is generated",
+        accessToken: {
+          value: "Bearer " + newAccessToken.token,
+          iat: newAccessToken.iat,
+          exp: newAccessToken.exp,
+        },
+        refreshToken: {
+          value: "Bearer " + refreshToken.value,
+          iat: refreshToken.iat,
+          exp: refreshToken.exp,
+        },
+      })
+      .end();
+  } catch (error) {
+    next(error);
+  }
+};
