@@ -18,7 +18,7 @@ Router.route("/signup/prod/verify").post(validateSignupInput, signupProd);
 
 Router.route("/signup/dev").post(validateSignupInput, signupDev);
 
-Router.route("/signup/prod/create").get(signupVerify);
+Router.route("/signup/prod/create").get(validateSignupInput, signupVerify);
 
 Router.route("/signin").post(validateSigninInput, checkUserEmail, signin);
 

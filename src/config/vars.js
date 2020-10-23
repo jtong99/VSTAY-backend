@@ -52,6 +52,7 @@ module.exports.domain = {
 module.exports.Models = {
   USER: "user",
   REFRESH_TOKEN: "refreshToken",
+  POST: "post",
 };
 
 module.exports.services = {
