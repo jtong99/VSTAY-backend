@@ -28,7 +28,7 @@ module.exports.connect = async () => {
 
     return db;
   } catch (error) {
-    console.log("Error connecting to MongoDb");
+    console.log("Error connecting to MongoDB");
     process.exit(0);
   }
 };
