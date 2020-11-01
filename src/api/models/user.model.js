@@ -175,6 +175,34 @@ class User extends BaseModel {
       });
     }
   }
+
+  getUserById = async (id, projection = {}) => {
+    const _id = this.toObjectId(id);
+
+    try {
+      const user = await this.collection.findOne({ _id: _id }, { projection });
+
+      if (!user) {
+        return null;
+      }
+
+      return user;
+    } catch (error) {
+      throw new APIError({
+        message: error.message || "Error getting user by user id",
+        status: error.status || httpStatus.INTERNAL_SERVER_ERROR,
+        stack: error.stack || error.stack,
+        isPublic: error.isPublic || false,
+        errors: error.errors || [
+          {
+            field: "getUserById",
+            location: "Users Collection",
+            message: "",
+          },
+        ],
+      });
+    }
+  };
 }
 
 module.exports = User;

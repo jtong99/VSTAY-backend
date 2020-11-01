@@ -30,6 +30,7 @@
   "author": "Tong Duc",
   "license": "ISC",
   "dependencies": {
+    "@elastic/elasticsearch": "^7.9.1",
     "@sendgrid/mail": "^7.2.6",
     "bcrypt": "^5.0.0",
     "bcryptjs": "^2.4.3",
@@ -45,6 +46,8 @@
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.20",
     "mongo": "^0.1.0",
+    "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0",
     "useragent": "^2.3.0",
     "validator": "^13.1.17"
   },

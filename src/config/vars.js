@@ -32,6 +32,11 @@ module.exports = {
     uri: databaseUri,
     name: db.name,
   },
+  ES: {
+    uri: process.env.ES_URI,
+    host: process.env.ES_HOST,
+    port: process.env.ES_PORT,
+  },
   secretOrPrivateKey: {
     value: process.env.SECRET_OR_PRIVATE_KEY,
     accessTokenExpiration:
@@ -39,6 +44,12 @@ module.exports = {
         ? process.env.ACCESS_TOKEN_EXPIRATION_IN_MINUTE * 10000
         : process.env.ACCESS_TOKEN_EXPIRATION_IN_MINUTE,
     refreshTokenExpiration: process.env.REFRESH_TOKEN_EXPIRATION_IN_HOUR,
+  },
+  service: {
+    redis: {
+      port: process.env.REDIS_PORT,
+      host: process.env.REDIS_HOST,
+    },
   },
 };
 

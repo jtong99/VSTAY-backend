@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const passport = require("passport");
 const bodyParser = require("body-parser");
 const app = express();
 
@@ -16,6 +17,9 @@ app.use(
 
 // enable CORS in Header
 app.use(cors());
+
+app.use(passport.initialize());
+require("./passport").jwt(passport);
 
 app.use(Router);
 
