@@ -196,7 +196,7 @@ class User extends BaseModel {
         errors: error.errors || [
           {
             field: "getUserById",
-            location: "Users Collections",
+            location: "Users Collection",
             message: "",
           },
         ],
