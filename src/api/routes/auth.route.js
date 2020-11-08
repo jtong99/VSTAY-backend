@@ -14,7 +14,7 @@ const {
   checkUserEmail,
 } = require("../validations/auth.validation");
 
-Router.route("/signup/prod/verify").post(validateSignupInput, signupProd);
+Router.route("/signup/prod/verify").post(signupProd);
 
 Router.route("/signup/dev").post(validateSignupInput, signupDev);
 

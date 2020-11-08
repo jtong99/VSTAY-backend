@@ -3,6 +3,7 @@ const cors = require("cors");
 const passport = require("passport");
 const bodyParser = require("body-parser");
 const app = express();
+const path = require("path");
 
 const error = require("../api/middlewares/error");
 
@@ -20,6 +21,8 @@ app.use(cors());
 
 app.use(passport.initialize());
 require("./passport").jwt(passport);
+
+app.use("/uploads", express.static(path.join(__dirname, "../api/uploads")));
 
 app.use(Router);
 

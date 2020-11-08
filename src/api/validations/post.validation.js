@@ -147,6 +147,7 @@ module.exports.postInsertValidation = async (req, res, next) => {
           "Detail of max people lives with is invalid",
           "Detail of bills is required",
           "Detail of bills is invalid",
+          "Detail of except is invalid",
           "Detail of except references is invalid",
         ],
         validate: () => {
@@ -211,9 +212,12 @@ module.exports.postInsertValidation = async (req, res, next) => {
           if (!Object.values(Bills).includes(detail.bills)) {
             return 15;
           }
+          if (typeof detail.except !== "string") {
+            return 16;
+          }
           if (detail.except) {
             if (!Object.values(CustomerPreference).includes(detail.except)) {
-              return 16;
+              return 17;
             }
           }
           return -1;

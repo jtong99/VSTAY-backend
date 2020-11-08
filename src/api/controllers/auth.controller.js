@@ -200,7 +200,7 @@ module.exports.signupVerify = async (req, res, next) => {
   }
 
   try {
-    const successfullRedirect = "http://localhost:4000";
+    const successfullRedirect = "http://localhost:3000";
     // const successfullRedirect =
     //   env === EnvHostingEnum.PRODUCTION
     //     ? "https://vstay.page.link/verified"
@@ -214,6 +214,7 @@ module.exports.signupVerify = async (req, res, next) => {
     console.log(user);
     return res.status(httpStatus.FOUND).redirect(successfullRedirect);
   } catch (error) {
+    console.log(error);
     next(error);
   }
 };

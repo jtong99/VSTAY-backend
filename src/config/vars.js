@@ -7,7 +7,12 @@ dotenv.config({
   path: path.join(__dirname, "../../.env"),
   example: path.join(__dirname, "../../.env.example"),
 });
+
 const env = process.env.NODE_ENV;
+const hostname =
+  env === EnvHostingEnum.DEVELOPMENT
+    ? process.env.DEV_HOST_NAME
+    : process.env.PROD_HOST_NAME;
 const port = process.env.PORT;
 const db = {
   host: process.env.DB_HOST,
@@ -26,6 +31,7 @@ const databaseUri =
     : `mongodb://${db.user.name}:${db.user.pwd}@${db.host}:${db.port}/${db.name}?authSource=admin`;
 
 module.exports = {
+  hostname,
   env,
   port,
   database: {
