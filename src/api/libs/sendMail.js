@@ -59,7 +59,7 @@ const emailVerification = async ({
 
   const email = to;
   const subject = "📨 Email verification";
-  const text = `Hey ${name}, you're almost ready to enjoy Knowllipop.
+  const text = `Hey ${name}, you're almost ready to enjoy Vstay.
     Please click the big button below to verify your email account.
     ${signupApi}?email=${email}&name=${name}&token=${token}`;
 
