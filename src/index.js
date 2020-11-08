@@ -15,7 +15,7 @@ const startApp = async () => {
   app.locals.ESClient = ESConnection;
 
   app.listen(port, () =>
-    console.log(`Server is listening on ${domain.API} (${env})`)
+    console.log(`Servers is listening on ${domain.API} (${env})`)
   );
 
   return app;
