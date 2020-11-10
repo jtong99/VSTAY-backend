@@ -1,0 +1,14 @@
+# cicd
+.github
+
+# Docker files
+Dockerfile
+docker-compose.yml
+docker-compose.prod.yml
+docker-compose.dev.yml
+docker-compose.test.yml
+
+#mongo
+/data
+/.data
+.idea
