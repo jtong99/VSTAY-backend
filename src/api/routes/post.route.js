@@ -1,7 +1,7 @@
 const Router = require("express").Router();
 const { makeSureLoggedIn } = require("../middlewares/auth.middleware");
 
-const { addPost } = require("../controllers/post.controller");
+const { addPost, uploadImages } = require("../controllers/post.controller");
 
 const { postInsertValidation } = require("../validations/post.validation");
 
@@ -11,6 +11,7 @@ const { upload } = require("../libs/uploadFile");
 
 Router.route("/").post(
   // postInsertValidation,
+  makeSureLoggedIn,
   addPost
 );
 
@@ -18,7 +19,7 @@ Router.route("/upload-images").post(
   // postInsertValidation,
   makeSureLoggedIn,
   upload.array("images", 17),
-  addPost
+  uploadImages
 );
 
 module.exports = Router;

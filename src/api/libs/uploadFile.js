@@ -22,6 +22,7 @@ const storage = multer.diskStorage({
     try {
       validateMimeType(file.mimetype);
     } catch (error) {
+      console.log(error);
       done(error);
     }
     const { _id } = req.user;
