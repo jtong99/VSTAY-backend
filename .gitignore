@@ -9,6 +9,7 @@ dist
 /docker
 /.docker
 /data
+/data/mongo
 /.data
 .idea
 yarn.lock
