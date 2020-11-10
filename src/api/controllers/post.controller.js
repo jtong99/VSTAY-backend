@@ -20,6 +20,7 @@ module.exports.addPost = async (req, res, next) => {
       description: body.description,
       images: body.images,
       price: body.price,
+      poster: req.user._id,
     };
     const result = await Post.insertOne(postObject);
     const postID = result._id;
