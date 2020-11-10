@@ -337,3 +337,37 @@ module.exports.refreshToken = async (req, res, next) => {
     next(error);
   }
 };
+
+module.exports.logout = async (req, res, next) => {
+  const { db } = req.app.locals;
+  const { Token, User } = new Model({ db });
+  const user = req.user;
+  const userId = user._id;
+  const useragent = getUserAgent(req);
+
+  try {
+    const refreshToken = await Token.getByUserIdAndAgent(userId, useragent);
+    if (!refreshToken) {
+      return res
+        .status(httpStatus.NOT_FOUND)
+        .json({
+          code: httpStatus.NOT_FOUND,
+          message: "No user found with current access token",
+        })
+        .end();
+    }
+
+    await Token.deleteTokenById(refreshToken._id);
+
+    return res
+      .status(httpStatus.OK)
+      .json({
+        code: httpStatus.OK,
+        message: "Signed out user",
+        user: User.transform(user),
+      })
+      .end();
+  } catch (error) {
+    next(error);
+  }
+};

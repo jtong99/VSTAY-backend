@@ -13,3 +13,6 @@ dist
 /.data
 .idea
 yarn.lock
+
+# uploads 
+/src/api/uploads

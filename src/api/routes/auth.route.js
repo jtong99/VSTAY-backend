@@ -6,7 +6,9 @@ const {
   signupVerify,
   signin,
   refreshToken,
+  logout,
 } = require("../controllers/auth.controller");
+const { makeSureLoggedIn } = require("../middlewares/auth.middleware");
 
 const {
   validateSignupInput,
@@ -23,5 +25,7 @@ Router.route("/signup/prod/create").get(signupVerify);
 Router.route("/signin").post(validateSigninInput, checkUserEmail, signin);
 
 Router.route("/refresh-token").get(refreshToken);
+
+Router.route("/logout").get(makeSureLoggedIn, logout);
 
 module.exports = Router;

@@ -213,6 +213,37 @@ class Token extends BaseModel {
       });
     }
   }
+
+  async getByUserIdAndAgent(user, agent) {
+    const userId = this.toObjectId(user);
+
+    const token = await this.collection.findOne({
+      userId: userId,
+      "user-agent": agent,
+    });
+
+    return token;
+  }
+
+  async deleteTokenById(_id) {
+    try {
+      const token = await this.collection.deleteOne({
+        _id: {
+          $eq: _id,
+        },
+      });
+
+      return token.deletedCount;
+    } catch (error) {
+      throw new APIError({
+        message: error.message || "Error generating access token",
+        status: error.status || httpStatus.INTERNAL_SERVER_ERROR,
+        stack: error.stack,
+        isPublic: error.isPublic || false,
+        errors: error.errors,
+      });
+    }
+  }
 }
 
 module.exports = Token;
