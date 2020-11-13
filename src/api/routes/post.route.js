@@ -9,14 +9,9 @@ const { upload } = require("../libs/uploadFile");
 
 /* Create new post */
 
-Router.route("/").post(
-  // postInsertValidation,
-  makeSureLoggedIn,
-  addPost
-);
+Router.route("/").post(postInsertValidation, makeSureLoggedIn, addPost);
 
 Router.route("/upload-images").post(
-  // postInsertValidation,
   makeSureLoggedIn,
   upload.array("images", 17),
   uploadImages

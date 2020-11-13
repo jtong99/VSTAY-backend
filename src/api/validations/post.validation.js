@@ -95,7 +95,7 @@ module.exports.postInsertValidation = async (req, res, next) => {
           if (price === null) {
             return 0;
           }
-          if (typeof price !== "int" && !(price instanceof Int)) {
+          if (typeof price !== "number" && !(price instanceof Int)) {
             return 1;
           }
           return -1;
@@ -121,8 +121,8 @@ module.exports.postInsertValidation = async (req, res, next) => {
             !address.geocode ||
             !address.geocode.latitude ||
             !address.geocode.longitude ||
-            typeof address.geocode.latitude !== "float" ||
-            typeof address.geocode.longitude !== "float"
+            typeof address.geocode.latitude !== "number" ||
+            typeof address.geocode.longitude !== "number"
           ) {
             return 2;
           }
@@ -163,7 +163,7 @@ module.exports.postInsertValidation = async (req, res, next) => {
             return 2;
           }
           if (
-            detail.parking !== "string" &&
+            typeof detail.parking !== "string" &&
             !(detail.parking instanceof String)
           ) {
             return 3;
@@ -172,7 +172,7 @@ module.exports.postInsertValidation = async (req, res, next) => {
             return 4;
           }
           if (
-            detail.internet !== "string" &&
+            typeof detail.internet !== "string" &&
             !(detail.internet instanceof String)
           ) {
             return 5;
@@ -201,7 +201,7 @@ module.exports.postInsertValidation = async (req, res, next) => {
             return 12;
           }
           if (
-            detail.max_people_live_with !== "int" &&
+            typeof detail.max_people_live_with !== "number" &&
             !(detail.max_people_live_with instanceof Int)
           ) {
             return 13;

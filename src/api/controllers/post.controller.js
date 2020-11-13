@@ -9,7 +9,7 @@ module.exports.addPost = async (req, res, next) => {
   try {
     const { db, ESClient } = req.app.locals;
     const { Post } = new Model({ db });
-    // const { ESPost } = new ESModel({ ESClient });
+    const { ESPost } = new ESModel({ ESClient });
     const body = req.body;
     const postObject = {
       title: body.title,
