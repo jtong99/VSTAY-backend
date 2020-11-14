@@ -79,3 +79,8 @@ module.exports.LengthOfStay = {
   ELEVEN_MONTH: 11,
   TWELVE_MONTH: 12,
 };
+
+module.exports.TypeOfPost = {
+  SHARE: "share",
+  NEED: "need",
+};

@@ -7,6 +7,7 @@ const {
   RoomFeatures,
   Bills,
   CustomerPreference,
+  TypeOfPost,
 } = require("../../config/config.enum");
 const { ObjectID } = require("mongodb");
 
@@ -14,6 +15,29 @@ module.exports.postInsertValidation = async (req, res, next) => {
   try {
     const postObject = req.body;
     const validations = {
+      type_of_post: {
+        errorMessage: [
+          "Type of post is required",
+          "Type of post must be string",
+          "Type of post is invalid",
+        ],
+        validate: () => {
+          const typeOfPost = _.get(postObject, "type_of_post", null);
+          if (typeOfPost === null) {
+            return 0;
+          }
+          if (
+            typeof typeOfPost !== "string" &&
+            !(typeOfPost instanceof String)
+          ) {
+            return 1;
+          }
+          if (!Object.values(TypeOfPost).includes(typeOfPost)) {
+            return 2;
+          }
+          return -1;
+        },
+      },
       type: {
         errorMessage: [
           "Type is required",
