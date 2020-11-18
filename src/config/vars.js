@@ -70,6 +70,7 @@ module.exports.Models = {
   USER: "user",
   REFRESH_TOKEN: "refreshToken",
   POST: "post",
+  NEED_POST: "needPost",
 };
 
 module.exports.services = {

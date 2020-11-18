@@ -3,10 +3,10 @@ const { Models } = require("../../config/vars");
 const BaseModel = require("../../used/base.model");
 const { toObjectId } = require("../helpers");
 
-class Post extends BaseModel {
+class NeedPost extends BaseModel {
   constructor(db) {
     super();
-    this.collectionName = Models.POST;
+    this.collectionName = Models.NEED_POST;
     this.collection = db.collection(this.collectionName);
   }
 
@@ -16,7 +16,7 @@ class Post extends BaseModel {
       return result.ops[0];
     } catch (error) {
       throw new APIError({
-        message: "Failed on inserting post",
+        message: "Failed on inserting need post",
         status: httpStatus.INTERNAL_SERVER_ERROR,
         stack: error.stack,
         isPublic: false,
@@ -90,4 +90,4 @@ class Post extends BaseModel {
   }
 }
 
-module.exports = Post;
+module.exports = NeedPost;

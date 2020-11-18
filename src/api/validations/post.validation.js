@@ -11,7 +11,7 @@ const {
 } = require("../../config/config.enum");
 const { ObjectID } = require("mongodb");
 
-module.exports.postInsertValidation = async (req, res, next) => {
+module.exports.postShareInsertValidation = async (req, res, next) => {
   try {
     const postObject = req.body;
     const validations = {
