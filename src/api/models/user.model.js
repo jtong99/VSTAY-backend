@@ -203,6 +203,34 @@ class User extends BaseModel {
       });
     }
   };
+
+  async updateUserById(id, data = {}) {
+    data.updatedAt = new Date();
+
+    try {
+      const updatedUser = await this.collection.findOneAndUpdate(
+        { _id: { $eq: ObjectId(id) } },
+        { $set: data },
+        { returnOriginal: false }
+      );
+      console.log(data);
+      return updatedUser.value;
+    } catch (error) {
+      throw new APIError({
+        message: "Error updating user by user email",
+        status: httpStatus.INTERNAL_SERVER_ERROR,
+        stack: error.stack,
+        isPublic: false,
+        errors: [
+          {
+            field: "updateUserByEmail",
+            location: "Users Collection",
+            message: "",
+          },
+        ],
+      });
+    }
+  }
 }
 
 module.exports = User;
