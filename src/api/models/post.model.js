@@ -2,6 +2,7 @@ const httpStatus = require("http-status");
 const { Models } = require("../../config/vars");
 const BaseModel = require("../../used/base.model");
 const { toObjectId } = require("../helpers");
+const { PostStatus } = require("../../config/config.enum");
 
 class Post extends BaseModel {
   constructor(db) {
@@ -81,6 +82,35 @@ class Post extends BaseModel {
     } catch (error) {
       throw new APIError({
         message: "Failed on getting post",
+        status: httpStatus.INTERNAL_SERVER_ERROR,
+        stack: error.stack,
+        isPublic: false,
+        errors: error.errors,
+      });
+    }
+  }
+
+  async getByUserId(userID, sort, pagination, projection = {}) {
+    try {
+      const query = {
+        poster: userID,
+        status: PostStatus.APPROVED,
+      };
+      const result = await this.collection
+        .find(query, { projection: projection })
+        .sort(sort)
+        .skip(pagination.pageNumber * pagination.pageSize)
+        .limit(pagination.pageSize);
+      const count = await result.count();
+      const resultArray = await result.toArray();
+      const returnObject = {
+        total: count ? count : 0,
+        resultArray: resultArray ? resultArray : [],
+      };
+      return returnObject;
+    } catch (error) {
+      throw new APIError({
+        message: "Failed on getting posts",
         status: httpStatus.INTERNAL_SERVER_ERROR,
         stack: error.stack,
         isPublic: false,

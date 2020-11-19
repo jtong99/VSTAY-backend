@@ -18,6 +18,12 @@ module.exports.UserStatusEnum = {
   BLOCKED: "blocked",
 };
 
+module.exports.PostStatus = {
+  PENDING: "pending",
+  REJECTED: "rejected",
+  APPROVED: "approved",
+};
+
 module.exports.PostType = {
   S_ROOM: "share_room",
   S_HOUSE: "share_room_in_house",

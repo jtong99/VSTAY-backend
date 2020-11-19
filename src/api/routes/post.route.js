@@ -5,6 +5,8 @@ const {
   addPost,
   uploadImages,
   addSharePost,
+  getPostsByUser,
+  getPostById,
 } = require("../controllers/post.controller");
 
 const { postShareInsertValidation } = require("../validations/post.validation");
@@ -20,5 +22,9 @@ Router.route("/upload-images").post(
   upload.array("images", 17),
   uploadImages
 );
+
+Router.route("/").get(makeSureLoggedIn, getPostsByUser);
+
+Router.route("/:postID").get(makeSureLoggedIn, getPostById);
 
 module.exports = Router;

@@ -1,8 +1,10 @@
 const httpStatus = require("http-status");
 const Model = require("../models");
 const ESModel = require("../ESModel");
+const { ObjectID } = require("mongodb");
 const { hostname } = require("../../config/vars");
 const path = require("path");
+const { isValidID } = require("../helpers/validate");
 const { moveFile, createFolderIfNotExists } = require("../helpers/fileSystem");
 
 module.exports.addSharePost = async (req, res, next) => {
@@ -73,6 +75,8 @@ module.exports.addPost = async (req, res, next) => {
       images: body.images,
       price: body.price,
       poster: req.user._id,
+      status: body.status,
+      type_of_post: body.type_of_post,
     };
     const result = await Post.insertOne(postObject);
     const postID = result._id;
@@ -147,6 +151,91 @@ module.exports.uploadImages = async (req, res, next) => {
         inserted: imageArr,
       })
       .end();
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports.getPostsByUser = async (req, res, next) => {
+  try {
+    // TODO: Check object ID type
+    const { db } = req.app.locals;
+    const { Post } = new Model({ db });
+
+    const userID = new ObjectID(req.query.userID);
+    const { sortBy, pageSize, pageNumber } = req.query;
+
+    const pagination = {};
+    pagination["pageSize"] = pageSize ? parseInt(pageSize) : 0;
+    pagination["pageNumber"] = pageNumber ? parseInt(pageNumber) - 1 : 0;
+
+    const sort = sortBy ? sortItems[sortBy] : {};
+
+    const returnObject = await Post.getByUserId(userID, sort, pagination);
+    const result = returnObject.resultArray;
+    console.log(userID);
+    if (!result || result === null || result.length === 0) {
+      return res
+        .status(httpStatus.NOT_FOUND)
+        .json({
+          code: httpStatus.NOT_FOUND,
+          message: "Posts are not found",
+        })
+        .end();
+    }
+    return res
+      .status(httpStatus.OK)
+      .json({
+        code: httpStatus.OK,
+        message: "Get posts successfully",
+        total: returnObject.total,
+        pagination: {
+          pageNumber: pageNumber,
+          pageSize: pageSize,
+        },
+        sortBy: sortBy,
+        result: result,
+      })
+      .end();
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
+module.exports.getPostById = async (req, res, next) => {
+  if (!isValidID(req.params.postID)) {
+    return res
+      .status(httpStatus.UNPROCESSABLE_ENTITY)
+      .json({
+        code: httpStatus.UNPROCESSABLE_ENTITY,
+        message: "Post ID is invalid",
+      })
+      .end();
+  }
+  const _id = new ObjectID(req.params.postID);
+  const { db } = req.app.locals;
+  const { Post } = new Model({ db });
+
+  try {
+    //== Get Post by ID block
+    const result = await Post.getById(_id);
+    if (!result || result === null || result === undefined) {
+      return res
+        .status(httpStatus.NOT_FOUND)
+        .json({
+          code: httpStatus.NOT_FOUND,
+          message: "Post is not found",
+        })
+        .end();
+    }
+
+    const response = {
+      code: httpStatus.OK,
+      message: "Get Post sucessfully",
+      result: result,
+    };
+    return res.status(response.code).json(response).end();
   } catch (error) {
     next(error);
   }

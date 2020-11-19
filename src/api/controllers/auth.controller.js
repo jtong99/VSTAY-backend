@@ -221,7 +221,7 @@ module.exports.signupVerify = async (req, res, next) => {
 
 module.exports.signin = async (req, res, next) => {
   const { db } = req.app.locals;
-  const { Token } = new Model({ db });
+  const { Token, User } = new Model({ db });
 
   const user = req.middleware.user;
   const rememberMe = _.get(req.query, "remember-me", false);
@@ -250,7 +250,8 @@ module.exports.signin = async (req, res, next) => {
       refreshToken: promises[1],
       firebaseToken: promises[2],
     }));
-
+    const data = await User.updateLastActivity(user._id);
+    console.log(data);
     const response = {
       code: httpStatus.OK,
       message: "OK",
@@ -273,6 +274,7 @@ module.exports.signin = async (req, res, next) => {
         email: user.email,
         avatar: user.avatar,
         createdAt: user.createdAt,
+        lastActivity: user.lastActivity,
       },
     };
 

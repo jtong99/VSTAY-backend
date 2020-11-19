@@ -99,6 +99,7 @@ class User extends BaseModel {
         language: language,
         createdAt: date,
         updatedAt: date,
+        lastActivity: date,
       });
 
       return newUser.ops[0];
@@ -203,7 +204,31 @@ class User extends BaseModel {
       });
     }
   };
-
+  async updateLastActivity(id) {
+    const data = { lastActivity: new Date() };
+    try {
+      const updatedUser = await this.collection.findOneAndUpdate(
+        { _id: { $eq: ObjectId(id) } },
+        { $set: data },
+        { returnOriginal: false }
+      );
+      return updatedUser.value;
+    } catch (error) {
+      throw new APIError({
+        message: "Error updating last activity of user",
+        status: httpStatus.INTERNAL_SERVER_ERROR,
+        stack: error.stack,
+        isPublic: false,
+        errors: [
+          {
+            field: "updateUserByEmail",
+            location: "Users Collection",
+            message: "",
+          },
+        ],
+      });
+    }
+  }
   async updateUserById(id, data = {}) {
     data.updatedAt = new Date();
 
