@@ -11,6 +11,7 @@ const {
   getCurrentUser,
   updateCurrentUserProfile,
   updateAvatar,
+  getUserByUserId,
 } = require("../controllers/user.controller");
 
 Router.route("/me").get(makeSureLoggedIn, getCurrentUser);
@@ -27,5 +28,7 @@ Router.route("/me/profile/avatar").patch(
   upload.single("avatar"),
   updateAvatar
 );
+
+Router.route("/:userId").get(makeSureLoggedIn, getUserByUserId);
 
 module.exports = Router;

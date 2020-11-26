@@ -80,24 +80,24 @@ module.exports.addPost = async (req, res, next) => {
     };
     const result = await Post.insertOne(postObject);
     const postID = result._id;
-    const pushES = await ESPost.createOne(postID, postObject);
-    console.log(pushES);
+    // const pushES = await ESPost.createOne(postID, postObject);
+    // console.log(pushES);
     // console.log(ESPost);
-    if (
-      (pushES && pushES.body && !pushES.body.result) ||
-      pushES.body.result !== "created"
-    ) {
-      const deleteResult = await Post.deleteById(new ObjectID(postID));
-      return res
-        .status(httpStatus.INTERNAL_SERVER_ERROR)
-        .json({
-          code: httpStatus.INTERNAL_SERVER_ERROR,
-          message: "Some thing is wrong with ES",
-          redo: deleteResult,
-          error: pushES,
-        })
-        .end();
-    }
+    // if (
+    //   (pushES && pushES.body && !pushES.body.result) ||
+    //   pushES.body.result !== "created"
+    // ) {
+    //   const deleteResult = await Post.deleteById(new ObjectID(postID));
+    //   return res
+    //     .status(httpStatus.INTERNAL_SERVER_ERROR)
+    //     .json({
+    //       code: httpStatus.INTERNAL_SERVER_ERROR,
+    //       message: "Some thing is wrong with ES",
+    //       redo: deleteResult,
+    //       error: pushES,
+    //     })
+    //     .end();
+    // }
 
     return res
       .status(httpStatus.CREATED)
@@ -233,6 +233,39 @@ module.exports.getPostById = async (req, res, next) => {
     const response = {
       code: httpStatus.OK,
       message: "Get Post sucessfully",
+      result: result,
+    };
+    return res.status(response.code).json(response).end();
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports.getAllPost = async (req, res, next) => {
+  const { db } = req.app.locals;
+  const { Post } = new Model({ db });
+  const { sortBy, pageSize, pageNumber } = req.query;
+  const pagination = {};
+  pagination["pageSize"] = pageSize ? parseInt(pageSize) : 0;
+  pagination["pageNumber"] = pageNumber ? parseInt(pageNumber) - 1 : 0;
+
+  const sort = sortBy ? sortItems[sortBy] : {};
+
+  try {
+    const result = await Post.getAllPost(pagination, sort);
+    if (!result || result === null || result === undefined) {
+      return res
+        .status(httpStatus.NOT_FOUND)
+        .json({
+          code: httpStatus.NOT_FOUND,
+          message: "All of Post is not found",
+        })
+        .end();
+    }
+
+    const response = {
+      code: httpStatus.OK,
+      message: "Get all of Post sucessfully",
       result: result,
     };
     return res.status(response.code).json(response).end();

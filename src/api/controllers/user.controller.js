@@ -31,6 +31,35 @@ module.exports.getCurrentUser = (req, res, next) => {
   }
 };
 
+module.exports.getUserByUserId = async (req, res, next) => {
+  const { db } = req.app.locals;
+  const { userId } = req.params;
+  const { User } = new Model({ db });
+
+  try {
+    const user = await User.getUserById(userId);
+    if (!user) {
+      return res
+        .status(httpStatus.NOT_FOUND)
+        .json({
+          code: httpStatus.NOT_FOUND,
+          message: "No user found",
+        })
+        .end();
+    }
+
+    const response = {
+      code: httpStatus.OK,
+      message: "Successfully get user data",
+      user: User.transform(user),
+    };
+
+    return res.status(response.code).json(response).end();
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports.updateCurrentUserProfile = async (req, res, next) => {
   const { db } = req.app.locals;
   const { User } = new Model({ db });
