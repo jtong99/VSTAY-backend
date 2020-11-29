@@ -8,6 +8,7 @@ const {
   getPostsByUser,
   getPostById,
   getAllPost,
+  searchSharePosts,
 } = require("../controllers/post.controller");
 
 const { postShareInsertValidation } = require("../validations/post.validation");
@@ -27,6 +28,8 @@ Router.route("/upload-images").post(
 Router.route("/").get(makeSureLoggedIn, getPostsByUser);
 
 Router.route("/all").get(getAllPost);
+
+Router.route("/search").get(searchSharePosts);
 
 Router.route("/:postID").get(makeSureLoggedIn, getPostById);
 

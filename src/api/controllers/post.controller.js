@@ -6,6 +6,7 @@ const { hostname } = require("../../config/vars");
 const path = require("path");
 const { isValidID } = require("../helpers/validate");
 const { moveFile, createFolderIfNotExists } = require("../helpers/fileSystem");
+const { ESsortItems } = require("../helpers/post");
 
 module.exports.addSharePost = async (req, res, next) => {
   try {
@@ -63,7 +64,7 @@ module.exports.addPost = async (req, res, next) => {
   try {
     const { db, ESClient } = req.app.locals;
     const { Post } = new Model({ db });
-    const { ESPost } = new ESModel({ ESClient });
+    const { ShareESPost } = new ESModel({ ESClient });
     const body = req.body;
     const postObject = {
       title: body.title,
@@ -77,27 +78,33 @@ module.exports.addPost = async (req, res, next) => {
       poster: req.user._id,
       status: body.status,
       type_of_post: body.type_of_post,
+      releasedAt: null,
+      statistics: {
+        viewCount: 0,
+        likeCount: 0,
+      },
+      createdAt: new Date(),
+      updatedAt: new Date(),
     };
     const result = await Post.insertOne(postObject);
     const postID = result._id;
-    // const pushES = await ESPost.createOne(postID, postObject);
-    // console.log(pushES);
-    // console.log(ESPost);
-    // if (
-    //   (pushES && pushES.body && !pushES.body.result) ||
-    //   pushES.body.result !== "created"
-    // ) {
-    //   const deleteResult = await Post.deleteById(new ObjectID(postID));
-    //   return res
-    //     .status(httpStatus.INTERNAL_SERVER_ERROR)
-    //     .json({
-    //       code: httpStatus.INTERNAL_SERVER_ERROR,
-    //       message: "Some thing is wrong with ES",
-    //       redo: deleteResult,
-    //       error: pushES,
-    //     })
-    //     .end();
-    // }
+    const pushES = await ShareESPost.createOne(postID, postObject);
+    console.log(pushES);
+    if (
+      (pushES && pushES.body && !pushES.body.result) ||
+      pushES.body.result !== "created"
+    ) {
+      const deleteResult = await Post.deleteById(new ObjectID(postID));
+      return res
+        .status(httpStatus.INTERNAL_SERVER_ERROR)
+        .json({
+          code: httpStatus.INTERNAL_SERVER_ERROR,
+          message: "Some thing is wrong with ES",
+          redo: deleteResult,
+          error: pushES,
+        })
+        .end();
+    }
 
     return res
       .status(httpStatus.CREATED)
@@ -270,6 +277,154 @@ module.exports.getAllPost = async (req, res, next) => {
     };
     return res.status(response.code).json(response).end();
   } catch (error) {
+    next(error);
+  }
+};
+
+module.exports.searchSharePosts = async (req, res, next) => {
+  try {
+    // system consts
+    const { db, ESClient } = req.app.locals;
+    const { ShareESPost } = new ESModel({ ESClient });
+    // const {
+    //   User,
+    //   Friendship,
+    //   UserVideo,
+    //   userVideoList,
+    //   reactions,
+    //   view,
+    //   share,
+    // } = new Model({ db });
+
+    const { pageSize, pageNumber, keyword, sortBy } = req.query;
+    const pagination = {
+      pageNumber: parseInt(pageNumber) - 1,
+      pageSize: parseInt(pageSize),
+    };
+
+    const sort =
+      sortBy !== null && sortBy !== undefined ? ESsortItems[sortBy] : {};
+
+    // const filter = [];
+    // for (const i in videoFeatures) {
+    //   const key = videoFeatures[i];
+    //   const val = _.get(req.query, `${key}`, null);
+    //   if (val) {
+    //     filter.push({
+    //       name: key,
+    //       value: val,
+    //     });
+    //   }
+    // }
+    const result = await ShareESPost.searchVideos(keyword, sort, pagination);
+    console.log(result);
+    if (!result || result.body.hits.total.value <= 0) {
+      return res
+        .status(httpStatus.NOT_FOUND)
+        .json({
+          code: httpStatus.NOT_FOUND,
+          message: "Posts are not found",
+        })
+        .end();
+    }
+    if (result.body.hits.hits.length <= 0) {
+      return res
+        .status(httpStatus.NOT_FOUND)
+        .json({
+          code: httpStatus.NOT_FOUND,
+          message: "There is no posts on current page",
+          total: result.hits.total.value,
+          pagination: {
+            pageNumber: pageNumber,
+            pageSize: pageSize,
+          },
+        })
+        .end();
+    }
+
+    // if (req.user && req.user._id) {
+    //   const currentUserID = req.user._id;
+
+    //   const hits = result.hits.hits;
+    //   for (const i in hits) {
+    //     const val = hits[i];
+    //     hits[
+    //       i
+    //     ]._source.watchingStatus = await UserVideo.getUserVideoByUserAndVideoId(
+    //       currentUserID,
+    //       new ObjectID(val._id)
+    //     );
+    //     hits[i]._source.saved = await userVideoList.isVideoInList(
+    //       new ObjectID(val._id),
+    //       "saved",
+    //       currentUserID
+    //     );
+    //   }
+    // }
+    // // Get video detail
+    // const items = result.hits.hits;
+    // for (let i = 0; i < items.length; i++) {
+    //   item = items[i];
+    //   const authorID = new ObjectID(item._source.author);
+    //   const authorDetail = await User.getUserById(authorID, {
+    //     _id: 1,
+    //     name: 1,
+    //     avatar: 1,
+    //   });
+
+    //   if (authorDetail) {
+    //     const followers = await Friendship.getFollowers(
+    //       new ObjectID(authorID),
+    //       {
+    //         pageNumber: 1,
+    //         pageSize: 1,
+    //       },
+    //       {
+    //         prob: "followedAt",
+    //         order: "desc",
+    //       }
+    //     );
+    //     followers
+    //       ? (authorDetail.followersCount = followers.count)
+    //       : (authorDetail.followersCount = 0);
+    //   }
+    //   authorDetail
+    //     ? (item._source.author = authorDetail)
+    //     : (item._source.author = "Not Found");
+
+    //   const videoID = new ObjectID(item._id);
+
+    //   const reactionCountObj = await reactions.getReactionsCount(videoID);
+    //   const viewCountObj = await view.getViewCountByVideoID(videoID);
+    //   const sharesCountObj = await share.getShareCountByVideoID(videoID);
+
+    //   const statistics = {
+    //     likeCount: reactionCountObj.likeCount,
+    //     dislikeCount: reactionCountObj.dislikeCount,
+    //     viewCount: viewCountObj.viewCount,
+    //     sharedCount: sharesCountObj.sharedCount,
+    //   };
+
+    //   item._source.statistics = statistics;
+    // }
+
+    return res
+      .status(httpStatus.OK)
+      .json({
+        code: httpStatus.OK,
+        message: "Search post successfully",
+        keyword: keyword,
+        // filter: filter,
+        sort: sort,
+        pagination: {
+          pageSize: pageSize,
+          pageNumber: pageNumber,
+        },
+        result: result.body.hits,
+      })
+      .end();
+  } catch (error) {
+    console.log(error);
     next(error);
   }
 };

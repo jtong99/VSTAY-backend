@@ -16,25 +16,25 @@ services:
   mongo:
     expose:
       - 27017
-  # elasticsearch:
-  #   environment:
-  #     - node.name=elasticsearch
-  #     - cluster.name=datasearch
-  #     - bootstrap.memory_lock=true
-  #     - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-  #     - cluster.initial_master_nodes=elasticsearch
-  #     - VIRTUAL_HOST=elastic.vstay.com
-  #     - LETSENCRYPT_HOST=elastic.vstay.com
-  #     - LETSENCRYPT_EMAIL=tmduc0908@gmail.com
-  #   expose:
-  #     - 9200
-  # kibana:
-  #   environment:
-  #     - VIRTUAL_HOST=kibana.vstay.com
-  #     - LETSENCRYPT_HOST=kibana.vstay.com
-  #     - LETSENCRYPT_EMAIL=tmduc0908@gmail.com
-  #   expose:
-  #     - 5601
+  elasticsearch:
+    environment:
+      - node.name=elasticsearch
+      - cluster.name=datasearch
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - cluster.initial_master_nodes=elasticsearch
+      - VIRTUAL_HOST=elastic.vstay.com
+      - LETSENCRYPT_HOST=elastic.vstay.com
+      - LETSENCRYPT_EMAIL=tmduc0908@gmail.com
+    expose:
+      - 9200
+  kibana:
+    environment:
+      - VIRTUAL_HOST=kibana.vstay.com
+      - LETSENCRYPT_HOST=kibana.vstay.com
+      - LETSENCRYPT_EMAIL=tmduc0908@gmail.com
+    expose:
+      - 5601
 networks:
   default:
     external:

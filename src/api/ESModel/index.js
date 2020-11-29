@@ -1,8 +1,10 @@
-const ESPost = require("./post.ESModel");
+const ShareESPost = require("./sharePost.ESModel");
+const NeedESPost = require("./needPost.ESModel");
 
 class ESModel {
   constructor({ ESClient }) {
-    this.ESPost = new ESPost(ESClient);
+    this.ShareESPost = new ShareESPost(ESClient);
+    this.NeedESPost = new NeedESPost(ESClient);
   }
 }
 module.exports = ESModel;

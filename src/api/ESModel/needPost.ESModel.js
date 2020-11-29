@@ -6,8 +6,8 @@ const { PostType } = require("../../config/config.enum");
 class ESNeedPost {
   constructor(ESclient) {
     this.ESclient = ESclient;
-    this.index = "posts";
-    this.type = "needPost";
+    this.index = "need-posts";
+    this.type = "need-post";
   }
   async createOne(postID, postObj) {
     try {
@@ -15,8 +15,8 @@ class ESNeedPost {
       delete clone._id;
       const result = await this.ESclient.index({
         id: postID.toString(),
-        index: "posts",
-        type: "needPost",
+        index: "need-posts",
+        type: "need-post",
         body: clone,
       });
       console.log(result);

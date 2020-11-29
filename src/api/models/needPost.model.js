@@ -119,6 +119,31 @@ class NeedPost extends BaseModel {
       });
     }
   }
+
+  async getAllNeedPost(pagination, sort, projection = {}) {
+    try {
+      const result = await this.collection
+        .find({}, { projection: projection })
+        .sort(sort)
+        .skip(pagination.pageNumber * pagination.pageSize)
+        .limit(pagination.pageSize);
+      const count = await result.count();
+      const resultArray = await result.toArray();
+      const returnObject = {
+        total: count ? count : 0,
+        resultArray: resultArray ? resultArray : [],
+      };
+      return returnObject;
+    } catch (error) {
+      throw new APIError({
+        message: "Failed on getting posts",
+        status: httpStatus.INTERNAL_SERVER_ERROR,
+        stack: error.stack,
+        isPublic: false,
+        errors: error.errors,
+      });
+    }
+  }
 }
 
 module.exports = NeedPost;

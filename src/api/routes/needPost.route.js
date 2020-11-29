@@ -6,6 +6,7 @@ const {
   uploadImages,
   getPostById,
   getPostsByUser,
+  getAllNeedPost,
 } = require("../controllers/needPost.controller");
 
 const { postShareInsertValidation } = require("../validations/post.validation");
@@ -17,6 +18,8 @@ const { upload } = require("../libs/uploadFile");
 Router.route("/").post(makeSureLoggedIn, addPost);
 
 Router.route("/").get(makeSureLoggedIn, getPostsByUser);
+
+Router.route("/all").get(getAllNeedPost);
 
 Router.route("/:postID").get(makeSureLoggedIn, getPostById);
 
