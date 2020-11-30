@@ -12,6 +12,7 @@ const {
   updateCurrentUserProfile,
   updateAvatar,
   getUserByUserId,
+  updateCurrentUserPassword,
 } = require("../controllers/user.controller");
 
 Router.route("/me").get(makeSureLoggedIn, getCurrentUser);
@@ -30,5 +31,11 @@ Router.route("/me/profile/avatar").patch(
 );
 
 Router.route("/:userId").get(makeSureLoggedIn, getUserByUserId);
+
+Router.route("/me/password").patch(
+  makeSureLoggedIn,
+  // validateUpdateUserPasswordInput,
+  updateCurrentUserPassword
+);
 
 module.exports = Router;

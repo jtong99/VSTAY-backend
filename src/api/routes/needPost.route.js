@@ -7,6 +7,7 @@ const {
   getPostById,
   getPostsByUser,
   getAllNeedPost,
+  searchNeedPosts,
 } = require("../controllers/needPost.controller");
 
 const { postShareInsertValidation } = require("../validations/post.validation");
@@ -20,6 +21,8 @@ Router.route("/").post(makeSureLoggedIn, addPost);
 Router.route("/").get(makeSureLoggedIn, getPostsByUser);
 
 Router.route("/all").get(getAllNeedPost);
+
+Router.route("/search").get(searchNeedPosts);
 
 Router.route("/:postID").get(makeSureLoggedIn, getPostById);
 

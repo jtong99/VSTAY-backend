@@ -155,3 +155,70 @@ module.exports.updateAvatar = async (req, res, next) => {
     next(error);
   }
 };
+
+module.exports.updateCurrentUserPassword = async (req, res, next) => {
+  try {
+    const { db } = req.app.locals;
+    const { User } = new Model({ db });
+    const user = req.user;
+
+    const { currentPassword, newPassword, confirmPassword } = req.body;
+
+    const isPasswordMatched = await User.comparePassword(
+      currentPassword,
+      user.password
+    );
+    if (!isPasswordMatched) {
+      return res
+        .status(httpStatus.BAD_REQUEST)
+        .json({
+          code: httpStatus.BAD_REQUEST,
+          message: "Current password does not match with the account",
+        })
+        .end();
+    }
+
+    if (confirmPassword.trim() !== newPassword.trim()) {
+      return res
+        .status(httpStatus.BAD_REQUEST)
+        .json({
+          code: httpStatus.BAD_REQUEST,
+          message: "Confirm password and New password fields must match",
+          errors: [
+            {
+              field: "confirmPassword",
+              location: "body",
+              message: "confirmPassword must match newPassword field",
+            },
+          ],
+        })
+        .end();
+    }
+
+    const updatedUser = await User.updateUserPasswordById(
+      user._id,
+      newPassword
+    );
+    console.log(updatedUser);
+    if (!updatedUser) {
+      return res
+        .status(httpStatus.INTERNAL_SERVER_ERROR)
+        .json({
+          code: httpStatus.INTERNAL_SERVER_ERROR,
+          message: "Failed to update user password",
+        })
+        .end();
+    }
+
+    return res
+      .status(httpStatus.OK)
+      .json({
+        code: httpStatus.OK,
+        message: "User password is updated",
+      })
+      .end();
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};

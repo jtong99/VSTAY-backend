@@ -8,7 +8,10 @@ const {
   refreshToken,
   logout,
 } = require("../controllers/auth.controller");
-const { makeSureLoggedIn } = require("../middlewares/auth.middleware");
+const {
+  makeSureLoggedIn,
+  checkUserPassword,
+} = require("../middlewares/auth.middleware");
 
 const {
   validateSignupInput,
@@ -22,7 +25,12 @@ Router.route("/signup/dev").post(validateSignupInput, signupDev);
 
 Router.route("/signup/prod/create").get(signupVerify);
 
-Router.route("/signin").post(validateSigninInput, checkUserEmail, signin);
+Router.route("/signin").post(
+  validateSigninInput,
+  checkUserEmail,
+  checkUserPassword,
+  signin
+);
 
 Router.route("/refresh-token").get(refreshToken);
 

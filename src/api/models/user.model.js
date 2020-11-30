@@ -256,6 +256,45 @@ class User extends BaseModel {
       });
     }
   }
+
+  async updateUserPasswordById(id, password) {
+    try {
+      const hashedPassword = await hashPassword(password);
+
+      const updatedUser = await this.collection.findOneAndUpdate(
+        {
+          _id: {
+            $eq: ObjectId(id),
+          },
+        },
+        {
+          $set: {
+            password: hashedPassword,
+            updatedAt: new Date(),
+          },
+        },
+        {
+          returnOriginal: false,
+        }
+      );
+
+      return updatedUser.value;
+    } catch (error) {
+      throw new APIError({
+        message: "Error updating user password by user id",
+        status: httpStatus.INTERNAL_SERVER_ERROR,
+        stack: error.stack,
+        isPublic: false,
+        errors: [
+          {
+            field: "updateUserPasswordById",
+            location: "Users Collection",
+            message: "",
+          },
+        ],
+      });
+    }
+  }
 }
 
 module.exports = User;
