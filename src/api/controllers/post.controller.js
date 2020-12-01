@@ -351,7 +351,7 @@ module.exports.searchSharePosts = async (req, res, next) => {
     //     const val = hits[i];
     //     hits[
     //       i
-    //     ]._source.watchingStatus = await UserVideo.getUserVideoByUserAndVideoId(
+    //     ]._source.watchingStatus = await UserVideo.getUserVideoByUserAndpostID(
     //       currentUserID,
     //       new ObjectID(val._id)
     //     );
@@ -393,11 +393,11 @@ module.exports.searchSharePosts = async (req, res, next) => {
     //     ? (item._source.author = authorDetail)
     //     : (item._source.author = "Not Found");
 
-    //   const videoID = new ObjectID(item._id);
+    //   const postID = new ObjectID(item._id);
 
-    //   const reactionCountObj = await reactions.getReactionsCount(videoID);
-    //   const viewCountObj = await view.getViewCountByVideoID(videoID);
-    //   const sharesCountObj = await share.getShareCountByVideoID(videoID);
+    //   const reactionCountObj = await reactions.getReactionsCount(postID);
+    //   const viewCountObj = await view.getViewCountBypostID(postID);
+    //   const sharesCountObj = await share.getShareCountBypostID(postID);
 
     //   const statistics = {
     //     likeCount: reactionCountObj.likeCount,
@@ -426,6 +426,84 @@ module.exports.searchSharePosts = async (req, res, next) => {
       .end();
   } catch (error) {
     console.log(error);
+    next(error);
+  }
+};
+
+module.exports.createNewReactionOnPost = async (req, res, next) => {
+  const currentUserID = req.user._id;
+
+  const { db } = req.app.locals;
+  const { reactions, Post } = new Model({ db });
+
+  try {
+    const postID = new ObjectID(req.params.postID);
+    const userReaction = req.params.reactionType.toLowerCase();
+    const reactionObj = {
+      userID: currentUserID,
+      createdAt: new Date(),
+    };
+
+    // Check reaction document exist
+    const reactionDoc = await reactions.getOneByPostID(postID);
+    if (
+      !reactionDoc ||
+      reactionDoc === null ||
+      reactionDoc === undefined ||
+      reactionDoc.length <= 0
+    ) {
+      const createNewReactionDoc = await reactions.insertOne({
+        postID: postID,
+        like: [],
+        dislike: [],
+      });
+      if (
+        !createNewReactionDoc ||
+        createNewReactionDoc === null ||
+        createNewReactionDoc === undefined
+      ) {
+        return res
+          .status(httpStatus.INTERNAL_SERVER_ERROR)
+          .json({
+            code: httpStatus.INTERNAL_SERVER_ERROR,
+            message: "Failed on creating new creaction",
+          })
+          .end();
+      }
+    }
+
+    const pullExisted = await reactions.pull(postID, currentUserID);
+    if (!pullExisted || pullExisted === null || pullExisted === undefined) {
+      return res
+        .status(httpStatus.INTERNAL_SERVER_ERROR)
+        .json({
+          code: httpStatus.INTERNAL_SERVER_ERROR,
+          message: "Push reaction process has been stoped",
+          reason: "Failed on pull existed process",
+        })
+        .end();
+    }
+
+    const result = await reactions.push(postID, userReaction, reactionObj);
+
+    const updateVideoStatisticsBlock = await Post.updateStatistics(postID, {
+      likeCount: result.like.length,
+      dislikeCount: result.dislike.length,
+    });
+
+    return res
+      .status(httpStatus.OK)
+      .json({
+        code: httpStatus.OK,
+        message: `${userReaction} video successfully`,
+        result: {
+          yourReaction: userReaction,
+          likeCount: result.like.length,
+          dislikeCount: result.dislike.length,
+        },
+      })
+      .end();
+  } catch (error) {
     next(error);
   }
 };
