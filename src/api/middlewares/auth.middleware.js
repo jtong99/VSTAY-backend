@@ -17,7 +17,7 @@ const makeSureLoggedIn = (req, res, next) => {
       };
       return res.status(response.code).json(response).end();
     }
-    console.log(user);
+    // console.log(user);
     // add user to payload data req
     req.logIn(user, { session: false }, (errorAssignAuth) => {
       if (errorAssignAuth) {

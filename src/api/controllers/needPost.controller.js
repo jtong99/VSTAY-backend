@@ -33,6 +33,7 @@ module.exports.addPost = async (req, res, next) => {
       statistics: {
         viewCount: 0,
         likeCount: 0,
+        dislikeCount: 0,
       },
       createdAt: new Date(),
       updatedAt: new Date(),

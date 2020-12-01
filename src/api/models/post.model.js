@@ -143,6 +143,35 @@ class Post extends BaseModel {
       });
     }
   }
+
+  async updateStatistics(_id, updateData) {
+    try {
+      const query = {
+        _id: _id,
+      };
+      const fitData = {};
+      for (const k in updateData) {
+        const val = updateData[k];
+        const newK = `statistics.${k}`;
+        fitData[newK] = val;
+      }
+      const data = {
+        $set: fitData,
+      };
+      const result = await this.collection.findOneAndUpdate(query, data, {
+        returnOriginal: false,
+      });
+      return result.value;
+    } catch (error) {
+      throw new APIError({
+        message: "Failed on updating post statistics",
+        status: httpStatus.INTERNAL_SERVER_ERROR,
+        stack: error.stack,
+        isPublic: false,
+        errors: error.errors,
+      });
+    }
+  }
 }
 
 module.exports = Post;
