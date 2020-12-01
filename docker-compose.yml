@@ -16,7 +16,7 @@ services:
     restart: always
     links:
       - mongo
-      # - elasticsearch
+      - elasticsearch
   mongo:
     image: mongo:4.2
     ports:
@@ -29,26 +29,26 @@ services:
       - DB_HOST=mongo
       - DB_PORT=27017
     command: mongod
-  # elasticsearch:
-  #   image: docker.elastic.co/elasticsearch/elasticsearch:7.9.3
-  #   container_name: vstay_elasticsearch
-  #   environment:
-  #     - node.name=elasticsearch
-  #     - cluster.name=datasearch
-  #     - bootstrap.memory_lock=true
-  #     - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-  #     - cluster.initial_master_nodes=elasticsearch
-  #   ports:
-  #     - 9200:9200
-  #     - 9300:9300
-  #   ulimits:
-  #     memlock:
-  #       soft: -1
-  #       hard: -1
-  #   volumes:
-  #     - ./data/elastic:/usr/share/elasticsearch/data
-  # kibana:
-  #   image: docker.elastic.co/kibana/kibana:7.9.3
-  #   container_name: vstay_kibana
-  #   logging:
-  #     driver: none
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.3
+    container_name: vstay_elasticsearch
+    environment:
+      - node.name=elasticsearch
+      - cluster.name=datasearch
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - cluster.initial_master_nodes=elasticsearch
+    ports:
+      - 9200:9200
+      - 9300:9300
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ./data/elastic:/usr/share/elasticsearch/data
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.9.3
+    container_name: vstay_kibana
+    logging:
+      driver: none

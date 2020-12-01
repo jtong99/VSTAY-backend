@@ -9,10 +9,10 @@ const { port, domain, env } = require("./config/vars");
 let appInstance;
 const startApp = async () => {
   const dbConnection = await dbConnect();
-  // const ESConnection = await connectES();
+  const ESConnection = await connectES();
 
   app.locals.db = dbConnection;
-  // app.locals.ESClient = ESConnection;
+  app.locals.ESClient = ESConnection;
 
   app.listen(port, () =>
     console.log(`Servers is listening on ${domain.API} (${env})`)
