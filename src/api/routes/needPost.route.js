@@ -8,7 +8,12 @@ const {
   getPostsByUser,
   getAllNeedPost,
   searchNeedPosts,
+  createNewReactionOnNeedPost,
 } = require("../controllers/needPost.controller");
+
+const {
+  paramsNeedPostValidation,
+} = require("../validations/needPost.validation");
 
 const { postShareInsertValidation } = require("../validations/post.validation");
 
@@ -30,6 +35,12 @@ Router.route("/upload-images").post(
   makeSureLoggedIn,
   upload.array("images", 17),
   uploadImages
+);
+
+Router.route("/:postID/reaction/:reactionType").post(
+  makeSureLoggedIn,
+  paramsNeedPostValidation,
+  createNewReactionOnNeedPost
 );
 
 module.exports = Router;

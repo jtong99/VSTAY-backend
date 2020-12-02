@@ -384,3 +384,81 @@ module.exports.searchNeedPosts = async (req, res, next) => {
     next(error);
   }
 };
+
+module.exports.createNewReactionOnNeedPost = async (req, res, next) => {
+  const currentUserID = req.user._id;
+
+  const { db } = req.app.locals;
+  const { reactions, NeedPost } = new Model({ db });
+
+  try {
+    const postID = new ObjectID(req.params.postID);
+    const userReaction = req.params.reactionType.toLowerCase();
+    const reactionObj = {
+      userID: currentUserID,
+      createdAt: new Date(),
+    };
+
+    // Check reaction document exist
+    const reactionDoc = await reactions.getOneByPostID(postID);
+    if (
+      !reactionDoc ||
+      reactionDoc === null ||
+      reactionDoc === undefined ||
+      reactionDoc.length <= 0
+    ) {
+      const createNewReactionDoc = await reactions.insertOne({
+        postID: postID,
+        like: [],
+        dislike: [],
+      });
+      if (
+        !createNewReactionDoc ||
+        createNewReactionDoc === null ||
+        createNewReactionDoc === undefined
+      ) {
+        return res
+          .status(httpStatus.INTERNAL_SERVER_ERROR)
+          .json({
+            code: httpStatus.INTERNAL_SERVER_ERROR,
+            message: "Failed on creating new creaction",
+          })
+          .end();
+      }
+    }
+
+    const pullExisted = await reactions.pull(postID, currentUserID);
+    if (!pullExisted || pullExisted === null || pullExisted === undefined) {
+      return res
+        .status(httpStatus.INTERNAL_SERVER_ERROR)
+        .json({
+          code: httpStatus.INTERNAL_SERVER_ERROR,
+          message: "Push reaction process has been stoped",
+          reason: "Failed on pull existed process",
+        })
+        .end();
+    }
+
+    const result = await reactions.push(postID, userReaction, reactionObj);
+
+    const updateVideoStatisticsBlock = await NeedPost.updateStatistics(postID, {
+      likeCount: result.like.length,
+      dislikeCount: result.dislike.length,
+    });
+
+    return res
+      .status(httpStatus.OK)
+      .json({
+        code: httpStatus.OK,
+        message: `${userReaction} video successfully`,
+        result: {
+          yourReaction: userReaction,
+          likeCount: result.like.length,
+          dislikeCount: result.dislike.length,
+        },
+      })
+      .end();
+  } catch (error) {
+    next(error);
+  }
+};

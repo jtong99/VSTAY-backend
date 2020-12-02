@@ -9,9 +9,13 @@ const {
   getPostById,
   getAllPost,
   searchSharePosts,
+  createNewReactionOnPost,
 } = require("../controllers/post.controller");
 
-const { postShareInsertValidation } = require("../validations/post.validation");
+const {
+  postShareInsertValidation,
+  paramsSharePostValidation,
+} = require("../validations/post.validation");
 
 const { upload } = require("../libs/uploadFile");
 
@@ -32,5 +36,11 @@ Router.route("/all").get(getAllPost);
 Router.route("/search").get(searchSharePosts);
 
 Router.route("/:postID").get(makeSureLoggedIn, getPostById);
+
+Router.route("/:postID/reaction/:reactionType").post(
+  makeSureLoggedIn,
+  paramsSharePostValidation,
+  createNewReactionOnPost
+);
 
 module.exports = Router;
