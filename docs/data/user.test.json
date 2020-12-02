@@ -1,0 +1,137 @@
+[
+  {
+    "_id": {
+      "$oid": "5f469bc50861076f7376d39c"
+    },
+    "email": "test01@gmail.com",
+    "name": "Wyman",
+    "password": "$2y$12$acv3cAs.4j9QNfZsRQR3fO8tFtjziu3y65vaxEVW.kSfPQ9Pgk18O",
+    "createdAt": {
+      "$date": "2020-08-26T17:28:37.038Z"
+    },
+    "updatedAt": {
+      "$date": "2020-08-26T17:28:37.038Z"
+    },
+    "role": "freePop",
+    "avatar": "https://api.adorable.io/avatars/285/1598462917155@adorable.io",
+    "status": "active",
+    "about": "",
+    "skills": [],
+    "social": {
+      "facebook": "",
+      "linkedin": "",
+      "youtube": ""
+    },
+    "headline": "",
+    "language": "",
+    "lastActivity": "2020-12-02T16:10:29.875+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "5f469bc508610763ef76d3f3"
+    },
+    "email": "test02@gmail.com",
+    "name": "Naomi",
+    "password": "$2y$12$acv3cAs.4j9QNfZsRQR3fO8tFtjziu3y65vaxEVW.kSfPQ9Pgk18O",
+    "createdAt": {
+      "$date": "2020-08-26T17:28:37.841Z"
+    },
+    "updatedAt": {
+      "$date": "2020-08-26T17:28:37.841Z"
+    },
+    "role": "freePop",
+    "avatar": "https://api.adorable.io/avatars/285/1598462917952@adorable.io",
+    "status": "active",
+    "about": "",
+    "skills": [],
+    "social": {
+      "facebook": "",
+      "linkedin": "",
+      "youtube": ""
+    },
+    "headline": "",
+    "language": "",
+    "lastActivity": "2020-12-02T16:10:29.875+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "5f469bc60861076ad476d44a"
+    },
+    "email": "test04@gmail.com",
+    "name": "Trudie",
+    "password": "$2y$12$acv3cAs.4j9QNfZsRQR3fO8tFtjziu3y65vaxEVW.kSfPQ9Pgk18O",
+    "createdAt": {
+      "$date": "2020-08-26T17:28:38.650Z"
+    },
+    "updatedAt": {
+      "$date": "2020-08-26T17:28:38.650Z"
+    },
+    "role": "freePop",
+    "avatar": "https://api.adorable.io/avatars/285/1598462918766@adorable.io",
+    "status": "active",
+    "about": "",
+    "skills": [],
+    "social": {
+      "facebook": "",
+      "linkedin": "",
+      "youtube": ""
+    },
+    "headline": "",
+    "language": "",
+    "lastActivity": "2020-12-02T16:10:29.875+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "5f469bc8086107524376d4e8"
+    },
+    "email": "test05@gmail.com",
+    "name": "Laila",
+    "password": "$2y$12$acv3cAs.4j9QNfZsRQR3fO8tFtjziu3y65vaxEVW.kSfPQ9Pgk18O",
+    "createdAt": {
+      "$date": "2020-08-26T17:28:40.135Z"
+    },
+    "updatedAt": {
+      "$date": "2020-08-26T17:28:40.135Z"
+    },
+    "role": "freePop",
+    "avatar": "https://api.adorable.io/avatars/285/1598462920252@adorable.io",
+    "status": "active",
+    "about": "",
+    "skills": [],
+    "social": {
+      "facebook": "",
+      "linkedin": "",
+      "youtube": ""
+    },
+    "headline": "",
+    "language": "",
+    "lastActivity": "2020-12-02T16:10:29.875+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "5f469bc9086107e24276d586"
+    },
+    "email": "test06@gmail.com",
+    "name": "Lue",
+    "password": "$2y$12$acv3cAs.4j9QNfZsRQR3fO8tFtjziu3y65vaxEVW.kSfPQ9Pgk18O",
+    "createdAt": {
+      "$date": "2020-08-26T17:28:41.602Z"
+    },
+    "updatedAt": {
+      "$date": "2020-08-26T17:28:41.602Z"
+    },
+    "role": "freePop",
+    "avatar": "https://api.adorable.io/avatars/285/1598462921722@adorable.io",
+    "status": "active",
+    "about": "",
+    "skills": [],
+    "social": {
+      "facebook": "",
+      "linkedin": "",
+      "youtube": ""
+    },
+    "headline": "",
+    "language": "",
+    "lastActivity": "2020-12-02T16:10:29.875+00:00"
+  }
+]

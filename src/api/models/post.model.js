@@ -3,6 +3,7 @@ const { Models } = require("../../config/vars");
 const BaseModel = require("../../used/base.model");
 const { toObjectId } = require("../helpers");
 const { PostStatus } = require("../../config/config.enum");
+const APIError = require("../utils/APIErr");
 
 class Post extends BaseModel {
   constructor(db) {
@@ -144,6 +145,31 @@ class Post extends BaseModel {
     }
   }
 
+  async getAllActivePost(pagination, sort, projection = {}) {
+    try {
+      const result = await this.collection
+        .find({ status: PostStatus.APPROVED }, { projection: projection })
+        .sort(sort)
+        .skip(pagination.pageNumber * pagination.pageSize)
+        .limit(pagination.pageSize);
+      const count = await result.count();
+      const resultArray = await result.toArray();
+      const returnObject = {
+        total: count ? count : 0,
+        resultArray: resultArray ? resultArray : [],
+      };
+      return returnObject;
+    } catch (error) {
+      throw new APIError({
+        message: "Failed on getting posts",
+        status: httpStatus.INTERNAL_SERVER_ERROR,
+        stack: error.stack,
+        isPublic: false,
+        errors: error.errors,
+      });
+    }
+  }
+
   async updateStatistics(_id, updateData) {
     try {
       const query = {
@@ -165,6 +191,52 @@ class Post extends BaseModel {
     } catch (error) {
       throw new APIError({
         message: "Failed on updating post statistics",
+        status: httpStatus.INTERNAL_SERVER_ERROR,
+        stack: error.stack,
+        isPublic: false,
+        errors: error.errors,
+      });
+    }
+  }
+
+  async getActiveSharePost(
+    filter = [],
+    sortBy = {},
+    pagination = {
+      pageSize: 10,
+      pageNumber: 0,
+    }
+  ) {
+    try {
+      let query = {
+        status: PostStatus.APPROVED,
+      };
+      if (filter.length > 0) {
+        query.features = {
+          $all: filter,
+        };
+      }
+
+      const cursor = await this.collection
+        .find(query)
+        .sort(sortBy)
+        .skip(pagination.pageNumber * pagination.pageSize)
+        .limit(pagination.pageSize);
+      const total = 10;
+      const result = await cursor.toArray();
+
+      return result
+        ? {
+            total: total,
+            _records: result,
+          }
+        : {
+            total: 0,
+            _records: [],
+          };
+    } catch (error) {
+      throw new APIError({
+        message: "Failed on getting videos",
         status: httpStatus.INTERNAL_SERVER_ERROR,
         stack: error.stack,
         isPublic: false,

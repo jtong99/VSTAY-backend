@@ -6,7 +6,7 @@ const path = require("path");
 const { moveFile, createFolderIfNotExists } = require("../helpers/fileSystem");
 const { isValidID } = require("../helpers/validate");
 const { ObjectID } = require("mongodb");
-const { ESsortItems } = require("../helpers/post");
+const { ESsortItems, sortItems } = require("../helpers/post");
 
 module.exports.addPost = async (req, res, next) => {
   try {
@@ -214,7 +214,7 @@ module.exports.getAllNeedPost = async (req, res, next) => {
   const sort = sortBy ? sortItems[sortBy] : {};
 
   try {
-    const result = await NeedPost.getAllNeedPost(pagination, sort);
+    const result = await NeedPost.getAllActiveNeedPost(pagination, sort);
     if (!result || result === null || result === undefined) {
       return res
         .status(httpStatus.NOT_FOUND)

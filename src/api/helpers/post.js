@@ -23,3 +23,21 @@ module.exports.ESsortItems = {
   //     uploadStatus: "asc",
   //   },
 };
+
+module.exports.sortItems = {
+  mostView: {
+    "statistics.viewCount": -1,
+  },
+  newest: {
+    releasedAt: -1,
+  },
+  oldest: {
+    releasedAt: 1,
+  },
+  mostLike: {
+    "statistics.likeCount": -1,
+  },
+  status: {
+    status: 1,
+  },
+};

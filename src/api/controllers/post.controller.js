@@ -6,7 +6,7 @@ const { hostname } = require("../../config/vars");
 const path = require("path");
 const { isValidID } = require("../helpers/validate");
 const { moveFile, createFolderIfNotExists } = require("../helpers/fileSystem");
-const { ESsortItems } = require("../helpers/post");
+const { ESsortItems, sortItems } = require("../helpers/post");
 
 module.exports.addSharePost = async (req, res, next) => {
   try {
