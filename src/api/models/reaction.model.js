@@ -94,6 +94,46 @@ class Reactions {
       });
     }
   }
+  async getUserReaction(userID, postID, projection = {}) {
+    try {
+      const result = await this.collection.findOne(
+        {
+          postID: postID,
+          $or: [
+            {
+              "like.userID": userID,
+            },
+            {
+              "dislike.userID": userID,
+            },
+          ],
+        },
+        {
+          _id: 1,
+          postID: 1,
+          like: {
+            $elemMatch: {
+              userID: userID,
+            },
+          },
+          dislike: {
+            $elemMatch: {
+              userID: userID,
+            },
+          },
+        }
+      );
+      return result;
+    } catch (error) {
+      throw new APIError({
+        message: "Failed on get user reaction",
+        status: httpStatus.INTERNAL_SERVER_ERROR,
+        stack: error.stack,
+        isPublic: false,
+        errors: error.errors,
+      });
+    }
+  }
 }
 
 module.exports = Reactions;

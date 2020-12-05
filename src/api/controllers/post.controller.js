@@ -7,6 +7,7 @@ const path = require("path");
 const { isValidID } = require("../helpers/validate");
 const { moveFile, createFolderIfNotExists } = require("../helpers/fileSystem");
 const { ESsortItems, sortItems } = require("../helpers/post");
+const _ = require("lodash");
 
 module.exports.addSharePost = async (req, res, next) => {
   try {
@@ -78,6 +79,7 @@ module.exports.addPost = async (req, res, next) => {
       poster: req.user._id,
       status: body.status,
       type_of_post: body.type_of_post,
+      target: body.target,
       releasedAt: null,
       statistics: {
         viewCount: 0,
@@ -223,9 +225,11 @@ module.exports.getPostById = async (req, res, next) => {
   }
   const _id = new ObjectID(req.params.postID);
   const { db } = req.app.locals;
-  const { Post } = new Model({ db });
+  const { Post, reactions, User } = new Model({ db });
 
   try {
+    const currentUserID = req.user._id;
+
     //== Get Post by ID block
     const result = await Post.getById(_id);
     if (!result || result === null || result === undefined) {
@@ -237,6 +241,35 @@ module.exports.getPostById = async (req, res, next) => {
         })
         .end();
     }
+    const userReaction = await reactions.getUserReaction(currentUserID, _id);
+
+    if (
+      !userReaction ||
+      userReaction === null ||
+      (userReaction.like.length <= 0 && userReaction.dislike.length <= 0)
+    ) {
+      _.set(result, "yourReaction", null);
+    } else {
+      _.set(
+        result,
+        "yourReaction",
+        userReaction.like.length <= 0 ? "dislike" : "like"
+      );
+    }
+
+    const author = await User.getUserById(result.poster);
+    if (!author) {
+      return res
+        .status(httpStatus.NOT_FOUND)
+        .json({
+          code: httpStatus.NOT_FOUND,
+          message: "Author is not found",
+        })
+        .end();
+    }
+    _.unset(author, "password");
+
+    _.set(result, "author", author);
 
     const response = {
       code: httpStatus.OK,

@@ -7,6 +7,7 @@ const { moveFile, createFolderIfNotExists } = require("../helpers/fileSystem");
 const { isValidID } = require("../helpers/validate");
 const { ObjectID } = require("mongodb");
 const { ESsortItems, sortItems } = require("../helpers/post");
+const _ = require("lodash");
 
 module.exports.addPost = async (req, res, next) => {
   try {
@@ -176,9 +177,10 @@ module.exports.getPostById = async (req, res, next) => {
   }
   const _id = new ObjectID(req.params.postID);
   const { db } = req.app.locals;
-  const { NeedPost } = new Model({ db });
+  const { NeedPost, reactions, User } = new Model({ db });
 
   try {
+    const currentUserID = req.user._id;
     //== Get NeedPost by ID block
     const result = await NeedPost.getById(_id);
     console.log(result);
@@ -192,6 +194,36 @@ module.exports.getPostById = async (req, res, next) => {
         .end();
     }
 
+    const userReaction = await reactions.getUserReaction(currentUserID, _id);
+
+    if (
+      !userReaction ||
+      userReaction === null ||
+      (userReaction.like.length <= 0 && userReaction.dislike.length <= 0)
+    ) {
+      _.set(result, "yourReaction", null);
+    } else {
+      _.set(
+        result,
+        "yourReaction",
+        userReaction.like.length <= 0 ? "dislike" : "like"
+      );
+    }
+
+    const author = await User.getUserById(result.poster);
+    if (!author) {
+      return res
+        .status(httpStatus.NOT_FOUND)
+        .json({
+          code: httpStatus.NOT_FOUND,
+          message: "Author is not found",
+        })
+        .end();
+    }
+    _.unset(author, "password");
+
+    _.set(result, "author", author);
+
     const response = {
       code: httpStatus.OK,
       message: "Get Need Post sucessfully",
@@ -199,6 +231,7 @@ module.exports.getPostById = async (req, res, next) => {
     };
     return res.status(response.code).json(response).end();
   } catch (error) {
+    console.log(error);
     next(error);
   }
 };
