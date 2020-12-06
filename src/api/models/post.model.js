@@ -128,6 +128,7 @@ class Post extends BaseModel {
         .skip(pagination.pageNumber * pagination.pageSize)
         .limit(pagination.pageSize);
       const count = await result.count();
+      console.log(count);
       const resultArray = await result.toArray();
       const returnObject = {
         total: count ? count : 0,

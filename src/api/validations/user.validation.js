@@ -1,6 +1,12 @@
 const httpStatus = require("http-status");
 const validator = require("validator");
 const _ = require("lodash");
+const {
+  includeSpecialChar,
+  includeLowerChar,
+  includeUpperChar,
+  includeNumberChar,
+} = require("./base.validation");
 
 module.exports.validateUpdateCurrentUserInput = (req, res, next) => {
   try {
@@ -234,5 +240,125 @@ module.exports.validateUpdateCurrentUserInput = (req, res, next) => {
     return next();
   } catch (error) {
     return next(error);
+  }
+};
+module.exports.validateUpdateUserPasswordInput = (req, res, next) => {
+  try {
+    const errors = [];
+
+    const currentPassword = req.body.currentPassword
+      ? req.body.currentPassword
+      : " ";
+    const newPassword = req.body.newPassword ? req.body.newPassword : " ";
+    const confirmPassword = req.body.confirmPassword
+      ? req.body.confirmPassword
+      : " ";
+
+    /**
+     * Check currentPassword field validation
+     * @param currentPassword String
+     * @case Cannot be empty
+     */
+    if (validator.isEmpty(currentPassword.trim())) {
+      errors.push({
+        field: "currentPassword",
+        location: "body",
+        message: "currentPassword field cannot be empty",
+      });
+    }
+
+    /**
+     * Check newPassword field validation
+     * @param newPassword String
+     * @case Cannot be empty
+     * @case Length is between 5 - 15 characters
+     * @case Must contain upper characters
+     * @case Must contain lower characters
+     * @case Must contain number characters
+     * @case Must not contain special characters
+     */
+    if (validator.isEmpty(newPassword.trim())) {
+      errors.push({
+        field: "newPassword",
+        location: "body",
+        message: "new password field cannot be empty",
+      });
+    } else {
+      if (
+        !validator.isLength(newPassword, {
+          min: 5,
+          max: 15,
+        })
+      ) {
+        errors.push({
+          field: "newPassword",
+          location: "body",
+          message: "new password field must be between 5 - 15 characters",
+        });
+      }
+
+      if (!includeSpecialChar(newPassword)) {
+        errors.push({
+          field: "newPassword",
+          location: "body",
+          message:
+            "new password field must contain at least 1 symbol character",
+        });
+      }
+
+      if (!includeUpperChar(newPassword)) {
+        errors.push({
+          field: "newPassword",
+          location: "body",
+          message: "new password field must contain upper characters",
+        });
+      }
+
+      if (!includeLowerChar(newPassword)) {
+        errors.push({
+          field: "newPassword",
+          location: "body",
+          message: "new password field must contain lower characters",
+        });
+      }
+
+      if (!includeNumberChar(newPassword)) {
+        errors.push({
+          field: "newPassword",
+          location: "body",
+          message: "new password field must contain number",
+        });
+      }
+    }
+
+    /**
+     * Check confirmPassword field validation
+     * @param confirmPassword String
+     * @case Cannot be empty
+     * @case Match newPassword field
+     */
+    if (validator.isEmpty(confirmPassword.trim())) {
+      errors.push({
+        field: "confirmPassword",
+        location: "body",
+        message: "confirmPassword field cannot be empty",
+      });
+    }
+
+    if (errors.length) {
+      return res
+        .status(httpStatus.UNPROCESSABLE_ENTITY)
+        .json({
+          code: httpStatus.UNPROCESSABLE_ENTITY,
+          message: "validation errors",
+          errors: errors,
+        })
+        .end();
+    }
+
+    return next();
+  } catch (error) {
+    console.log(error);
+    next(error);
   }
 };

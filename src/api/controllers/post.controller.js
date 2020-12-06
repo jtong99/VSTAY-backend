@@ -293,7 +293,8 @@ module.exports.getAllPost = async (req, res, next) => {
   const sort = sortBy ? sortItems[sortBy] : {};
 
   try {
-    const result = await Post.getAllPost(pagination, sort);
+    const result = await Post.getAllActivePost(pagination, sort);
+
     if (!result || result === null || result === undefined) {
       return res
         .status(httpStatus.NOT_FOUND)

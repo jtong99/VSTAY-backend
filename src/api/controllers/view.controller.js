@@ -10,6 +10,7 @@ module.exports.pushViewToPost = async (req, res, next) => {
     const { db } = req.app.locals;
     const { view, NeedPost, Post } = new Model({ db });
     const type = _.get(req.query, "type", "");
+    const watchingTime = _.get(req.body, "watchingTime", "");
     const { postID } = req.params;
 
     const userID = req.user._id;
@@ -20,6 +21,7 @@ module.exports.pushViewToPost = async (req, res, next) => {
       views: [
         {
           userID: userID,
+          watchingTime,
           createdAt: new Date(),
         },
       ],

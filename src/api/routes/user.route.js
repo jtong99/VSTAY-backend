@@ -5,6 +5,7 @@ const { upload } = require("../libs/uploadFile");
 
 const {
   validateUpdateCurrentUserInput,
+  validateUpdateUserPasswordInput,
 } = require("../validations/user.validation");
 
 const {
@@ -34,7 +35,7 @@ Router.route("/:userId").get(makeSureLoggedIn, getUserByUserId);
 
 Router.route("/me/password").patch(
   makeSureLoggedIn,
-  // validateUpdateUserPasswordInput,
+  validateUpdateUserPasswordInput,
   updateCurrentUserPassword
 );
 
