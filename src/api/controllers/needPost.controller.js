@@ -248,6 +248,7 @@ module.exports.getAllNeedPost = async (req, res, next) => {
 
   try {
     const result = await NeedPost.getAllActiveNeedPost(pagination, sort);
+    console.log(result);
     if (!result || result === null || result === undefined) {
       return res
         .status(httpStatus.NOT_FOUND)
@@ -260,7 +261,7 @@ module.exports.getAllNeedPost = async (req, res, next) => {
 
     const response = {
       code: httpStatus.OK,
-      message: "Get all of Post sucessfully",
+      message: "Get all of need Post sucessfully",
       result: result,
     };
     return res.status(response.code).json(response).end();

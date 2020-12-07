@@ -5,6 +5,7 @@ const { ObjectID } = require("mongodb");
 const { hostname } = require("../../config/vars");
 const path = require("path");
 const { isValidID } = require("../helpers/validate");
+const { haversine } = require("../helpers/haversine");
 const { moveFile, createFolderIfNotExists } = require("../helpers/fileSystem");
 const { ESsortItems, sortItems } = require("../helpers/post");
 const _ = require("lodash");
@@ -538,6 +539,115 @@ module.exports.createNewReactionOnPost = async (req, res, next) => {
       })
       .end();
   } catch (error) {
+    next(error);
+  }
+};
+
+module.exports.getPostsByUser = async (req, res, next) => {
+  try {
+    const { db } = req.app.locals;
+    const { Post } = new Model({ db });
+
+    const userID = new ObjectID(req.query.userID);
+    const { sortBy, pageSize, pageNumber } = req.query;
+
+    const pagination = {};
+    pagination["pageSize"] = pageSize ? parseInt(pageSize) : 0;
+    pagination["pageNumber"] = pageNumber ? parseInt(pageNumber) - 1 : 0;
+
+    const sort = sortBy ? sortItems[sortBy] : {};
+
+    const returnObject = await Post.getByUserId(userID, sort, pagination);
+    const result = returnObject.resultArray;
+    if (!result || result === null || result.length === 0) {
+      return res
+        .status(httpStatus.NOT_FOUND)
+        .json({
+          code: httpStatus.NOT_FOUND,
+          message: "Post are not found",
+        })
+        .end();
+    }
+    return res
+      .status(httpStatus.OK)
+      .json({
+        code: httpStatus.OK,
+        message: "Get Posts successfully",
+        total: returnObject.total,
+        pagination: {
+          pageNumber: pageNumber,
+          pageSize: pageSize,
+        },
+        sortBy: sortBy,
+        result: result,
+      })
+      .end();
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports.getRelatedPostBasedOnPostedLocation = async (req, res, next) => {
+  if (!isValidID(req.params.postID)) {
+    return res
+      .status(httpStatus.UNPROCESSABLE_ENTITY)
+      .json({
+        code: httpStatus.UNPROCESSABLE_ENTITY,
+        message: "Post ID is invalid",
+      })
+      .end();
+  }
+  const _id = new ObjectID(req.params.postID);
+  try {
+    const currentUserID = req.user._id;
+    const { db } = req.app.locals;
+    const { reactions, Post } = new Model({ db });
+
+    const currentPost = await Post.getById(_id, { address: 1 });
+    const {
+      address: { geocode: currentPostGeocode },
+    } = currentPost;
+    const { sortBy, pageSize, pageNumber } = req.query;
+    const sort = sortBy ? sortItems[sortBy] : {};
+
+    const pagination = {};
+    pagination["pageSize"] = pageSize ? parseInt(pageSize) : 0;
+    pagination["pageNumber"] = pageNumber ? parseInt(pageNumber) - 1 : 0;
+
+    const allPost = await Post.getAllPostWithoutSort(pagination);
+    const resultRelated = [];
+    if (allPost.total > 0) {
+      for (let i = 0; i < allPost.resultArray.length; i++) {
+        const {
+          address: { geocode },
+        } = allPost.resultArray[i];
+        const distance = haversine(
+          currentPostGeocode.latitude,
+          currentPostGeocode.longitude,
+          geocode.latitude,
+          geocode.longitude
+        );
+        resultRelated.push({ ...allPost.resultArray[i], distance });
+      }
+    }
+    //sort array ascending by distance
+    const rs = resultRelated.sort((a, b) => a.distance - b.distance);
+    return res
+      .status(httpStatus.OK)
+      .json({
+        code: httpStatus.OK,
+        message: "Get related Posts successfully",
+        // total: userPost.total,
+        // pagination: {
+        //   pageNumber: pageNumber,
+        //   pageSize: pageSize,
+        // },
+        // sortBy: sortBy,
+        result: rs,
+      })
+      .end();
+  } catch (error) {
+    console.log(error);
     next(error);
   }
 };

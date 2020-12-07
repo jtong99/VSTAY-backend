@@ -10,6 +10,7 @@ const {
   getAllPost,
   searchSharePosts,
   createNewReactionOnPost,
+  getRelatedPostBasedOnPostedLocation,
 } = require("../controllers/post.controller");
 
 const {
@@ -34,6 +35,11 @@ Router.route("/").get(makeSureLoggedIn, getPostsByUser);
 Router.route("/all").get(getAllPost);
 
 Router.route("/search").get(searchSharePosts);
+
+Router.route("/related-location/:postID").get(
+  makeSureLoggedIn,
+  getRelatedPostBasedOnPostedLocation
+);
 
 Router.route("/:postID").get(makeSureLoggedIn, getPostById);
 
