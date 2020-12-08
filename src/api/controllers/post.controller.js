@@ -9,6 +9,7 @@ const { haversine } = require("../helpers/haversine");
 const { moveFile, createFolderIfNotExists } = require("../helpers/fileSystem");
 const { ESsortItems, sortItems } = require("../helpers/post");
 const _ = require("lodash");
+const { PostStatus } = require("../../config/config.enum");
 
 module.exports.addSharePost = async (req, res, next) => {
   try {
@@ -184,7 +185,7 @@ module.exports.getPostsByUser = async (req, res, next) => {
 
     const returnObject = await Post.getByUserId(userID, sort, pagination);
     const result = returnObject.resultArray;
-    console.log(userID);
+    console.log(result);
     if (!result || result === null || result.length === 0) {
       return res
         .status(httpStatus.NOT_FOUND)
@@ -212,6 +213,10 @@ module.exports.getPostsByUser = async (req, res, next) => {
     console.log(error);
     next(error);
   }
+};
+
+module.exports.getPostByCurrentUser = async (req, res, next) => {
+  const currentUserID = req.user._id;
 };
 
 module.exports.getPostById = async (req, res, next) => {
@@ -648,6 +653,54 @@ module.exports.getRelatedPostBasedOnPostedLocation = async (req, res, next) => {
       .end();
   } catch (error) {
     console.log(error);
+    next(error);
+  }
+};
+
+module.exports.updatePostStatus = async (req, res, next) => {
+  const { postID, type } = req.body;
+
+  if (!postID || !type) {
+    return res
+      .status(httpStatus.UNPROCESSABLE_ENTITY)
+      .json({
+        code: httpStatus.UNPROCESSABLE_ENTITY,
+        message: "Post ID or type is required",
+      })
+      .end();
+  }
+
+  if (!Object.values(PostStatus).includes(type)) {
+    return res
+      .status(httpStatus.UNPROCESSABLE_ENTITY)
+      .json({
+        code: httpStatus.UNPROCESSABLE_ENTITY,
+        message: "Post status is invalid",
+      })
+      .end();
+  }
+
+  try {
+    const { db } = req.app.locals;
+    const { Post } = new Model({ db });
+
+    const isValidVideo = await Post.getById(postID);
+
+    return res
+      .status(httpStatus.OK)
+      .json({
+        code: httpStatus.OK,
+        message: "Get related Posts successfully",
+        // total: userPost.total,
+        // pagination: {
+        //   pageNumber: pageNumber,
+        //   pageSize: pageSize,
+        // },
+        // sortBy: sortBy,
+        result: isValidVideo,
+      })
+      .end();
+  } catch (error) {
     next(error);
   }
 };

@@ -269,6 +269,30 @@ class Post extends BaseModel {
       });
     }
   }
+
+  async updateStatusPost(_id, status) {
+    try {
+      const query = {
+        _id: _id,
+      };
+      const fitData = { status };
+      const data = {
+        $set: fitData,
+      };
+      const result = await this.collection.findOneAndUpdate(query, data, {
+        returnOriginal: false,
+      });
+      return result.value;
+    } catch (error) {
+      throw new APIError({
+        message: "Failed on updating post status",
+        status: httpStatus.INTERNAL_SERVER_ERROR,
+        stack: error.stack,
+        isPublic: false,
+        errors: error.errors,
+      });
+    }
+  }
 }
 
 module.exports = Post;

@@ -22,6 +22,7 @@ module.exports.PostStatus = {
   PENDING: "pending",
   REJECTED: "rejected",
   APPROVED: "approved",
+  SOLVED: "solved",
 };
 
 module.exports.PostType = {

@@ -11,6 +11,7 @@ const {
   searchSharePosts,
   createNewReactionOnPost,
   getRelatedPostBasedOnPostedLocation,
+  updatePostStatus,
 } = require("../controllers/post.controller");
 
 const {
@@ -35,6 +36,8 @@ Router.route("/").get(makeSureLoggedIn, getPostsByUser);
 Router.route("/all").get(getAllPost);
 
 Router.route("/search").get(searchSharePosts);
+
+Router.route("/status").patch(makeSureLoggedIn, updatePostStatus);
 
 Router.route("/related-location/:postID").get(
   makeSureLoggedIn,
