@@ -1,6 +1,7 @@
 const httpStatus = require("http-status");
 const validator = require("validator");
 const _ = require("lodash");
+const firebaseAdmin = require("../libs/firebase");
 
 const APIError = require("../utils/APIErr");
 
@@ -280,9 +281,43 @@ const checkUserEmail = async (req, res, next) => {
     return next(error);
   }
 };
+const firebaseAuth = async (req, res, next) => {
+  const firebaseToken = _.get(req.body, "firebaseToken", "");
+
+  try {
+    if (firebaseToken) {
+      const decoded = await firebaseAdmin.auth().verifyIdToken(firebaseToken);
+      if (!decoded) {
+        const response = {
+          code: httpStatus.NOT_FOUND,
+          message: "Wrong account or password",
+        };
+
+        return res.status(response.code).json(response).end();
+      }
+    }
+
+    return next();
+  } catch (error) {
+    console.log(error);
+    return next(error);
+  }
+};
+const checkCredentials = async (req, res, next) => {
+  const provider = _.get(req.body, "provider", "");
+
+  if (!provider) {
+    return checkUserPassword(req, res, next);
+  }
+
+  if (provider === "firebase") {
+    return firebaseAuth(req, res, next);
+  }
+};
 
 module.exports = {
   validateSignupInput,
   validateSigninInput,
   checkUserEmail,
+  checkCredentials,
 };

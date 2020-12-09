@@ -17,6 +17,7 @@ const {
   validateSignupInput,
   validateSigninInput,
   checkUserEmail,
+  checkCredentials,
 } = require("../validations/auth.validation");
 
 Router.route("/signup/prod/verify").post(validateSignupInput, signupProd);
@@ -28,7 +29,7 @@ Router.route("/signup/prod/create").get(signupVerify);
 Router.route("/signin").post(
   validateSigninInput,
   checkUserEmail,
-  checkUserPassword,
+  checkCredentials,
   signin
 );
 
