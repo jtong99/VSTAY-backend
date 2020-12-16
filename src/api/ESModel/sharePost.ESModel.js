@@ -1,7 +1,7 @@
 const httpStatus = require("http-status");
 const APIError = require("../utils/APIErr");
 
-const { PostType } = require("../../config/config.enum");
+const { PostType, PostStatus } = require("../../config/config.enum");
 
 class ESPost {
   constructor(ESclient) {
@@ -34,17 +34,21 @@ class ESPost {
       //         term: { uploadStatus: VideoUploadStatusEnum.APPROVED },
       //     }
       // ];
-      const filterQuerys = [];
-      filterQuerys.push({
-        nested: {
-          path: "address",
-          query: {
-            bool: {
-              must: [{ match: { "address.name": keyword } }],
-            },
-          },
+      const filterQuerys = [
+        {
+          term: { status: PostStatus.PENDING },
         },
-      });
+      ];
+      // filterQuerys.push({
+      //   nested: {
+      //     path: "address",
+      //     query: {
+      //       bool: {
+      //         must: [{ match: { "address.name": keyword } }],
+      //       },
+      //     },
+      //   },
+      // });
       // for (const i in filter) {
       //     const val = filter[i];
       //     const filterQuery = {
@@ -81,7 +85,7 @@ class ESPost {
         index: "share-posts",
         type: "share-post",
         body: {
-          min_score: 0.5,
+          min_score: 0,
           query: {
             bool: {
               should: multiMatchQueries,
@@ -102,6 +106,56 @@ class ESPost {
       console.log(error.meta.body.error);
       throw new APIError({
         message: "Failed on searching post",
+        status: httpStatus.INTERNAL_SERVER_ERROR,
+        stack: error.stack,
+        isPublic: false,
+        errors: error.errors,
+      });
+    }
+  }
+
+  async partialUpdateByID(_id, data) {
+    try {
+      const result = await this.ESclient.updateByQuery({
+        index: this.index,
+        type: this.type,
+        body: {
+          query: {
+            match: {
+              _id: _id,
+            },
+          },
+          script: {
+            inline: data,
+          },
+        },
+      });
+      return result;
+    } catch (error) {
+      throw new APIError({
+        message: "Failed on updating post, ES",
+        status: httpStatus.INTERNAL_SERVER_ERROR,
+        stack: error.stack,
+        isPublic: false,
+        errors: error.errors,
+      });
+    }
+  }
+
+  async fullDocUpdateByID(_id, data) {
+    try {
+      const result = await this.ESclient.update({
+        index: this.index,
+        type: this.type,
+        id: _id.toString(),
+        body: {
+          doc: data,
+        },
+      });
+      return result;
+    } catch (error) {
+      throw new APIError({
+        message: "Failed on updating post",
         status: httpStatus.INTERNAL_SERVER_ERROR,
         stack: error.stack,
         isPublic: false,
