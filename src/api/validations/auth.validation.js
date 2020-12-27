@@ -16,6 +16,31 @@ const { enumToArray, isInEnum } = require("../helpers/enum");
 
 const Model = require("../models");
 
+const checkUserPassword = async (req, res, next) => {
+  const { db } = req.app.locals;
+  const { User } = new Model({ db });
+  const user = req.middleware.user;
+  const password = _.get(req.body, "password", "");
+
+  try {
+    const isPasswordMatched = await User.comparePassword(
+      password,
+      user.password
+    );
+    if (!isPasswordMatched) {
+      const response = {
+        code: httpStatus.BAD_REQUEST,
+        message: "Wrong account or password",
+      };
+      return res.status(response.code).json(response).end();
+    }
+
+    return next();
+  } catch (error) {
+    return next(error);
+  }
+};
+
 const validateSignupInput = (req, res, next) => {
   const errors = [];
 

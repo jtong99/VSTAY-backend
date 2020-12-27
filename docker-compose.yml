@@ -13,7 +13,7 @@ services:
       - DB_URI=mongodb://mongo:27017/vstay-db
       - DB_HOST=mongo
       - DB_PORT=27017
-    restart: always
+    # restart: always
     links:
       - mongo
       - elasticsearch
@@ -22,7 +22,7 @@ services:
     ports:
       - "9000:27017"
     container_name: vstay-db
-    restart: always
+    # restart: always
     volumes:
       - "./data/mongo:/data/db"
     environment:
