@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon src/index.js",
     "docker:dev": "sudo docker-compose -f docker-compose.yml -f docker-compose.dev.yml up",
-    "commit": "sudo git add -A && git commit -m",
+    "commit": "git add -A && git commit -m",
     "eslint-check": "eslint --print-config src/index.jsx | eslint-config-prettier-check",
     "docker:prod": "docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d",
     "docker:stop": "docker-compose down",

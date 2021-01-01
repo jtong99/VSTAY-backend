@@ -112,7 +112,7 @@ const validateSignupInput = (req, res, next) => {
       errors.push({
         field: "email",
         location: "body",
-        message: "invalid email format",
+        message: "Invalid email format",
       });
     }
   }
