@@ -29,7 +29,6 @@ jobs:
           password: ${{ secrets.VSTAY_API_PASSWORD }}
           port: ${{ secrets.VSTAY_API_PORT }}
           script: |
-            echo ${{ secrets.VSTAY_API_WORKDIR }}/backend
             cd ${{ secrets.VSTAY_API_WORKDIR }}/backend
             git pull
             cp .env.example .env
