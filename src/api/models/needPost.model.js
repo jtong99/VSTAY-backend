@@ -94,7 +94,7 @@ class NeedPost extends BaseModel {
     try {
       const query = {
         poster: userID,
-        // status: PostStatus.PENDING,
+        // status: PostStatus.PENDING, get all of status
       };
       const result = await this.collection
         .find(query, { projection: projection })
