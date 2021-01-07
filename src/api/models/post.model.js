@@ -95,7 +95,7 @@ class Post extends BaseModel {
     try {
       const query = {
         poster: userID,
-        status: PostStatus.APPROVED,
+        // status: PostStatus.APPROVED,
       };
       const result = await this.collection
         .find(query, { projection: projection })
