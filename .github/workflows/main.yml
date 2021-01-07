@@ -29,7 +29,7 @@ jobs:
           password: ${{ secrets.VSTAY_API_PASSWORD }}
           port: ${{ secrets.VSTAY_API_PORT }}
           script: |
-            cd ${{ secrets.VSTAY_API_WORKDIR }}/vstay-backend
+            cd ${{ secrets.VSTAY_API_WORKDIR }}/backend
             git pull
             cp .env.example .env
             npm install
