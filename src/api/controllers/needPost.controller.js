@@ -8,6 +8,7 @@ const { isValidID } = require("../helpers/validate");
 const { ObjectID } = require("mongodb");
 const { ESsortItems, sortItems } = require("../helpers/post");
 const _ = require("lodash");
+const { formatTimeIn8601 } = require("../helpers/date");
 
 module.exports.addPost = async (req, res, next) => {
   try {
@@ -29,7 +30,6 @@ module.exports.addPost = async (req, res, next) => {
       type_of_post: body.type_of_post,
       poster: req.user._id,
       status: body.status,
-      type_of_post: body.type_of_post,
       releasedAt: null,
       statistics: {
         viewCount: 0,
@@ -493,6 +493,77 @@ module.exports.createNewReactionOnNeedPost = async (req, res, next) => {
       })
       .end();
   } catch (error) {
+    next(error);
+  }
+};
+
+module.exports.updatePostById = async (req, res, next) => {
+  try {
+    const body = req.body;
+    const userId = req.user._id;
+    const postID = new ObjectID(req.params.id);
+
+    const rawData = {
+      about: body.about,
+      budget: body.budget,
+      employment_status: body.employment_status,
+      length_of_stay: body.length_of_stay,
+      life_style: body.life_style,
+      location: body.location,
+      move_date: body.move_date,
+      detail: body.detail,
+      description: body.description,
+      updatedAt: formatTimeIn8601(new Date()),
+    };
+
+    // Clean Update Data
+    for (const key in rawData) {
+      if (rawData[key] === null || rawData[key] === undefined) {
+        delete rawData[key];
+      }
+    }
+    console.log(rawData);
+    // const ESUpdateData = convertObjToStringForESUpdate(rawData);
+
+    if (!rawData || Object.keys(rawData).length === 0) {
+      return res
+        .status(httpStatus.BAD_REQUEST)
+        .json({
+          code: httpStatus.BAD_REQUEST,
+          message: "There is no data for updating",
+        })
+        .end();
+    }
+
+    const { db, ESClient } = req.app.locals;
+    const { NeedPost } = new Model({ db });
+    const { NeedESPost } = new ESModel({ ESClient });
+
+    const result = await NeedPost.updateById(postID, userId, rawData);
+    // console.log(result);
+    if (result === null || result === undefined || !result) {
+      return res
+        .status(httpStatus.NOT_FOUND)
+        .json({
+          code: httpStatus.NOT_FOUND,
+          message: "Post is not found",
+        })
+        .end();
+    }
+
+    const updateEsDoc = await NeedESPost.fullDocUpdateByID(postID, rawData);
+
+    console.log(updateEsDoc);
+    return res
+      .status(httpStatus.OK)
+      .json({
+        code: httpStatus.OK,
+        message: "Post is updated",
+        updatedData: result,
+      })
+      .end();
+  } catch (error) {
+    console.log(error);
     next(error);
   }
 };

@@ -12,6 +12,7 @@ const {
   createNewReactionOnPost,
   getRelatedPostBasedOnPostedLocation,
   updatePostStatus,
+  updatePostById,
 } = require("../controllers/post.controller");
 
 const {
@@ -42,6 +43,12 @@ Router.route("/status").patch(makeSureLoggedIn, updatePostStatus);
 Router.route("/related-location/:postID").get(
   makeSureLoggedIn,
   getRelatedPostBasedOnPostedLocation
+);
+
+Router.route("/:id").patch(
+  makeSureLoggedIn,
+  // videoBeforeInsertValidate,
+  updatePostById
 );
 
 Router.route("/:postID").get(makeSureLoggedIn, getPostById);

@@ -10,6 +10,7 @@ const { moveFile, createFolderIfNotExists } = require("../helpers/fileSystem");
 const { ESsortItems, sortItems } = require("../helpers/post");
 const _ = require("lodash");
 const { PostStatus } = require("../../config/config.enum");
+const { formatTimeIn8601 } = require("../helpers/date");
 
 module.exports.addSharePost = async (req, res, next) => {
   try {
@@ -658,19 +659,19 @@ module.exports.getRelatedPostBasedOnPostedLocation = async (req, res, next) => {
 };
 
 module.exports.updatePostStatus = async (req, res, next) => {
-  const { postID, type } = req.body;
+  const { postID, status } = req.body;
 
-  if (!postID || !type) {
+  if (!postID || !status) {
     return res
       .status(httpStatus.UNPROCESSABLE_ENTITY)
       .json({
         code: httpStatus.UNPROCESSABLE_ENTITY,
-        message: "Post ID or type is required",
+        message: "Post ID or status is required",
       })
       .end();
   }
 
-  if (!Object.values(PostStatus).includes(type)) {
+  if (!Object.values(PostStatus).includes(status)) {
     return res
       .status(httpStatus.UNPROCESSABLE_ENTITY)
       .json({
@@ -681,26 +682,109 @@ module.exports.updatePostStatus = async (req, res, next) => {
   }
 
   try {
-    const { db } = req.app.locals;
+    const { db, ESClient } = req.app.locals;
+    const { ShareESPost } = new ESModel({ ESClient });
     const { Post } = new Model({ db });
-
-    const isValidVideo = await Post.getById(postID);
-
+    const result = await Post.updateStatusPost(postID, status);
+    if (result === null || result === undefined || !result) {
+      return res
+        .status(httpStatus.NOT_FOUND)
+        .json({
+          code: httpStatus.NOT_FOUND,
+          message: "Post is not found",
+        })
+        .end();
+    }
+    const updateEsDoc = await ShareESPost.fullDocUpdateByID(postID, { status });
+    console.log(updateEsDoc);
     return res
       .status(httpStatus.OK)
       .json({
         code: httpStatus.OK,
-        message: "Get related Posts successfully",
+        message: "Updated post successfully",
         // total: userPost.total,
         // pagination: {
         //   pageNumber: pageNumber,
         //   pageSize: pageSize,
         // },
         // sortBy: sortBy,
-        result: isValidVideo,
+        result,
       })
       .end();
   } catch (error) {
+    next(error);
+  }
+};
+
+module.exports.updatePostById = async (req, res, next) => {
+  try {
+    const body = req.body;
+    const userId = req.user._id;
+    const postID = new ObjectID(req.params.id);
+
+    const rawData = {
+      title: body.title,
+      type: body.type,
+      address: body.address,
+      detail: body.detail,
+      features: body.features,
+      description: body.description,
+      images: body.images,
+      price: body.price,
+      status: body.status,
+      type_of_post: body.type_of_post,
+      target: body.target,
+      updatedAt: formatTimeIn8601(new Date()),
+    };
+
+    // Clean Update Data
+    for (const key in rawData) {
+      if (rawData[key] === null || rawData[key] === undefined) {
+        delete rawData[key];
+      }
+    }
+    console.log(rawData);
+    // const ESUpdateData = convertObjToStringForESUpdate(rawData);
+
+    if (!rawData || Object.keys(rawData).length === 0) {
+      return res
+        .status(httpStatus.BAD_REQUEST)
+        .json({
+          code: httpStatus.BAD_REQUEST,
+          message: "There is no data for updating",
+        })
+        .end();
+    }
+
+    const { db, ESClient } = req.app.locals;
+    const { Post } = new Model({ db });
+    const { ShareESPost } = new ESModel({ ESClient });
+
+    const result = await Post.updateById(postID, userId, rawData);
+    // console.log(result);
+    if (result === null || result === undefined || !result) {
+      return res
+        .status(httpStatus.NOT_FOUND)
+        .json({
+          code: httpStatus.NOT_FOUND,
+          message: "Post is not found",
+        })
+        .end();
+    }
+
+    const updateEsDoc = await ShareESPost.fullDocUpdateByID(postID, rawData);
+
+    console.log(updateEsDoc);
+    return res
+      .status(httpStatus.OK)
+      .json({
+        code: httpStatus.OK,
+        message: "Post is updated",
+        updatedData: result,
+      })
+      .end();
+  } catch (error) {
+    console.log(error);
     next(error);
   }
 };

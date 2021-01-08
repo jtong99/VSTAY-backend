@@ -4,6 +4,7 @@ const BaseModel = require("../../used/base.model");
 const { toObjectId } = require("../helpers");
 const { PostStatus } = require("../../config/config.enum");
 const APIError = require("../utils/APIErr");
+const { ObjectId } = require("mongodb");
 
 class Post extends BaseModel {
   constructor(db) {
@@ -173,7 +174,10 @@ class Post extends BaseModel {
   async getAllActivePost(pagination, sort, projection = {}) {
     try {
       const result = await this.collection
-        .find({ status: PostStatus.APPROVED }, { projection: projection })
+        .find(
+          { status: { $ne: PostStatus.DELETED } },
+          { projection: projection }
+        )
         .sort(sort)
         .skip(pagination.pageNumber * pagination.pageSize)
         .limit(pagination.pageSize);
@@ -270,15 +274,14 @@ class Post extends BaseModel {
     }
   }
 
-  async updateStatusPost(_id, status) {
+  async updateStatusPost(id, status) {
     try {
-      const query = {
-        _id: _id,
-      };
+      const query = { _id: { $eq: ObjectId(id) } };
       const fitData = { status };
       const data = {
         $set: fitData,
       };
+
       const result = await this.collection.findOneAndUpdate(query, data, {
         returnOriginal: false,
       });
@@ -286,6 +289,31 @@ class Post extends BaseModel {
     } catch (error) {
       throw new APIError({
         message: "Failed on updating post status",
+        status: httpStatus.INTERNAL_SERVER_ERROR,
+        stack: error.stack,
+        isPublic: false,
+        errors: error.errors,
+      });
+    }
+  }
+
+  async updateById(_id, userId, rawData) {
+    try {
+      const query = {
+        _id: _id,
+        poster: userId,
+      };
+      const data = {
+        $set: rawData,
+      };
+      const result = await this.collection.findOneAndUpdate(query, data, {
+        returnOriginal: false,
+      });
+      return result.value;
+    } catch (error) {
+      console.log(error);
+      throw new APIError({
+        message: "Failed on updating posts",
         status: httpStatus.INTERNAL_SERVER_ERROR,
         stack: error.stack,
         isPublic: false,

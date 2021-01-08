@@ -108,6 +108,27 @@ class ESNeedPost {
       });
     }
   }
+  async fullDocUpdateByID(_id, data) {
+    try {
+      const result = await this.ESclient.update({
+        index: this.index,
+        type: this.type,
+        id: _id.toString(),
+        body: {
+          doc: data,
+        },
+      });
+      return result;
+    } catch (error) {
+      throw new APIError({
+        message: "Failed on updating need post",
+        status: httpStatus.INTERNAL_SERVER_ERROR,
+        stack: error.stack,
+        isPublic: false,
+        errors: error.errors,
+      });
+    }
+  }
 }
 
 module.exports = ESNeedPost;

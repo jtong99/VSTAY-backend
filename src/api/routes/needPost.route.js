@@ -9,6 +9,7 @@ const {
   getAllNeedPost,
   searchNeedPosts,
   createNewReactionOnNeedPost,
+  updatePostById,
 } = require("../controllers/needPost.controller");
 
 const {
@@ -28,6 +29,12 @@ Router.route("/").get(makeSureLoggedIn, getPostsByUser);
 Router.route("/all").get(getAllNeedPost);
 
 Router.route("/search").get(searchNeedPosts);
+
+Router.route("/:id").patch(
+  makeSureLoggedIn,
+  // videoBeforeInsertValidate,
+  updatePostById
+);
 
 Router.route("/:postID").get(makeSureLoggedIn, getPostById);
 

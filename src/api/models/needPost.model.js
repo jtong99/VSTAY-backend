@@ -198,6 +198,30 @@ class NeedPost extends BaseModel {
       });
     }
   }
+
+  async updateById(_id, userId, rawData) {
+    try {
+      const query = {
+        _id: _id,
+        poster: userId,
+      };
+      const data = {
+        $set: rawData,
+      };
+      const result = await this.collection.findOneAndUpdate(query, data, {
+        returnOriginal: false,
+      });
+      return result.value;
+    } catch (error) {
+      throw new APIError({
+        message: "Failed on updating posts",
+        status: httpStatus.INTERNAL_SERVER_ERROR,
+        stack: error.stack,
+        isPublic: false,
+        errors: error.errors,
+      });
+    }
+  }
 }
 
 module.exports = NeedPost;

@@ -23,6 +23,7 @@ module.exports.PostStatus = {
   REJECTED: "rejected",
   APPROVED: "approved",
   SOLVED: "solved",
+  DELETED: "deleted",
 };
 
 module.exports.PostType = {
