@@ -13,6 +13,7 @@ const {
   getRelatedPostBasedOnPostedLocation,
   updatePostStatus,
   updatePostById,
+  getPostByCurrentUser,
 } = require("../controllers/post.controller");
 
 const {
@@ -33,6 +34,8 @@ Router.route("/upload-images").post(
 );
 
 Router.route("/").get(makeSureLoggedIn, getPostsByUser);
+
+Router.route("/me").get(makeSureLoggedIn, getPostByCurrentUser);
 
 Router.route("/all").get(getAllPost);
 

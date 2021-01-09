@@ -10,6 +10,7 @@ const {
   searchNeedPosts,
   createNewReactionOnNeedPost,
   updatePostById,
+  getPostsOfCurrentUser,
 } = require("../controllers/needPost.controller");
 
 const {
@@ -25,6 +26,8 @@ const { upload } = require("../libs/uploadFile");
 Router.route("/").post(makeSureLoggedIn, addPost);
 
 Router.route("/").get(makeSureLoggedIn, getPostsByUser);
+
+Router.route("/me").get(makeSureLoggedIn, getPostsOfCurrentUser);
 
 Router.route("/all").get(getAllNeedPost);
 

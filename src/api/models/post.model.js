@@ -96,6 +96,7 @@ class Post extends BaseModel {
     try {
       const query = {
         poster: userID,
+        status: { $ne: PostStatus.DELETED },
         // status: PostStatus.APPROVED,
       };
       const result = await this.collection
@@ -103,8 +104,10 @@ class Post extends BaseModel {
         .sort(sort)
         .skip(pagination.pageNumber * pagination.pageSize)
         .limit(pagination.pageSize);
+
       const count = await result.count();
       const resultArray = await result.toArray();
+      console.log(resultArray);
       const returnObject = {
         total: count ? count : 0,
         resultArray: resultArray ? resultArray : [],

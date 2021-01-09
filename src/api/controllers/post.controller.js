@@ -186,16 +186,15 @@ module.exports.getPostsByUser = async (req, res, next) => {
 
     const returnObject = await Post.getByUserId(userID, sort, pagination);
     const result = returnObject.resultArray;
-    console.log(result);
-    if (!result || result === null || result.length === 0) {
-      return res
-        .status(httpStatus.NOT_FOUND)
-        .json({
-          code: httpStatus.NOT_FOUND,
-          message: "Posts are not found",
-        })
-        .end();
-    }
+    // if (!result || result === null || result.length === 0) {
+    //   return res
+    //     .status(httpStatus.NOT_FOUND)
+    //     .json({
+    //       code: httpStatus.NOT_FOUND,
+    //       message: "Posts are not found",
+    //     })
+    //     .end();
+    // }
     return res
       .status(httpStatus.OK)
       .json({
@@ -217,7 +216,48 @@ module.exports.getPostsByUser = async (req, res, next) => {
 };
 
 module.exports.getPostByCurrentUser = async (req, res, next) => {
-  const currentUserID = req.user._id;
+  try {
+    const { db } = req.app.locals;
+    const { Post } = new Model({ db });
+
+    const userID = req.user._id;
+    const { sortBy, pageSize, pageNumber } = req.query;
+
+    const pagination = {};
+    pagination["pageSize"] = pageSize ? parseInt(pageSize) : 0;
+    pagination["pageNumber"] = pageNumber ? parseInt(pageNumber) - 1 : 0;
+
+    const sort = sortBy ? sortItems[sortBy] : {};
+
+    const returnObject = await Post.getByUserId(userID, sort, pagination);
+    const result = returnObject.resultArray;
+
+    // if (!result || result === null || result.length === 0) {
+    //   return res
+    //     .status(httpStatus.NOT_FOUND)
+    //     .json({
+    //       code: httpStatus.NOT_FOUND,
+    //       message: "Post of user are not found",
+    //     })
+    //     .end();
+    // }
+    return res
+      .status(httpStatus.OK)
+      .json({
+        code: httpStatus.OK,
+        message: "Get Posts successfully",
+        total: returnObject.total,
+        pagination: {
+          pageNumber: pageNumber,
+          pageSize: pageSize,
+        },
+        sortBy: sortBy,
+        result: result,
+      })
+      .end();
+  } catch (error) {
+    next(error);
+  }
 };
 
 module.exports.getPostById = async (req, res, next) => {
@@ -565,15 +605,15 @@ module.exports.getPostsByUser = async (req, res, next) => {
 
     const returnObject = await Post.getByUserId(userID, sort, pagination);
     const result = returnObject.resultArray;
-    if (!result || result === null || result.length === 0) {
-      return res
-        .status(httpStatus.NOT_FOUND)
-        .json({
-          code: httpStatus.NOT_FOUND,
-          message: "Post are not found",
-        })
-        .end();
-    }
+    // if (!result || result === null || result.length === 0) {
+    //   return res
+    //     .status(httpStatus.NOT_FOUND)
+    //     .json({
+    //       code: httpStatus.NOT_FOUND,
+    //       message: "Post of user are not found",
+    //     })
+    //     .end();
+    // }
     return res
       .status(httpStatus.OK)
       .json({
@@ -732,7 +772,6 @@ module.exports.updatePostById = async (req, res, next) => {
       images: body.images,
       price: body.price,
       status: body.status,
-      type_of_post: body.type_of_post,
       target: body.target,
       updatedAt: formatTimeIn8601(new Date()),
     };

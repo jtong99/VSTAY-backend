@@ -165,6 +165,54 @@ module.exports.getPostsByUser = async (req, res, next) => {
   }
 };
 
+module.exports.getPostsOfCurrentUser = async (req, res, next) => {
+  try {
+    // TODO: Check object ID type
+    const { db } = req.app.locals;
+    const { NeedPost } = new Model({ db });
+
+    const userID = req.user._id;
+
+    const { sortBy, pageSize, pageNumber } = req.query;
+
+    const pagination = {};
+    pagination["pageSize"] = pageSize ? parseInt(pageSize) : 0;
+    pagination["pageNumber"] = pageNumber ? parseInt(pageNumber) - 1 : 0;
+
+    const sort = sortBy ? sortItems[sortBy] : {};
+
+    const returnObject = await NeedPost.getByUserId(userID, sort, pagination);
+    const result = returnObject.resultArray;
+
+    if (!result || result === null || result.length === 0) {
+      return res
+        .status(httpStatus.NOT_FOUND)
+        .json({
+          code: httpStatus.NOT_FOUND,
+          message: "Need Posts are not found",
+        })
+        .end();
+    }
+    return res
+      .status(httpStatus.OK)
+      .json({
+        code: httpStatus.OK,
+        message: "Get Need posts successfully",
+        total: returnObject.total,
+        pagination: {
+          pageNumber: pageNumber,
+          pageSize: pageSize,
+        },
+        sortBy: sortBy,
+        result: result,
+      })
+      .end();
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
 module.exports.getPostById = async (req, res, next) => {
   if (!isValidID(req.params.postID)) {
     return res
@@ -513,6 +561,7 @@ module.exports.updatePostById = async (req, res, next) => {
       move_date: body.move_date,
       detail: body.detail,
       description: body.description,
+      status: body.status,
       updatedAt: formatTimeIn8601(new Date()),
     };
 

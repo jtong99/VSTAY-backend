@@ -1,0 +1,472 @@
+[
+  {
+    "_id": {
+      "$oid": "5fc0bc9f13e6956c9aebbabd"
+    },
+    "title": "Big house need sharing",
+    "type": "share_whole_property",
+    "address": {
+      "name": "Cái Khế, Quận Ninh Kiều, Can Tho, Vietnam",
+      "geocode": {
+        "longitude": 105.7846671000007,
+        "latitude": 10.045995900840246
+      }
+    },
+    "detail": {
+      "parking": "yes",
+      "internet": "some_in_rent",
+      "total_bedrooms": 4,
+      "total_bathrooms": 3,
+      "max_people_live_with": 3,
+      "toilets": "owned",
+      "furnishing": "flexible",
+      "bills": "some_in_rent",
+      "depositLength": "2",
+      "room_availability": {
+        "min_length_of_stay": 1,
+        "max_length_of_stay": 12,
+        "date_availability": 1606552973000
+      },
+      "except": "anyone"
+    },
+    "features": [
+      "air_conditioner",
+      "balcony",
+      "chair",
+      "couch",
+      "table",
+      "kitchenette",
+      "fan",
+      "wardrobe",
+      "tv",
+      "desk",
+      "door_lock"
+    ],
+    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. ",
+    "images": [
+      "http://104.209.148.218:4000/uploads/post-images/images-1606466645683-5fbf23228be9060f8f168d3c-house2.jpg",
+      "http://104.209.148.218:4000/uploads/post-images/images-1606466646505-5fbf23228be9060f8f168d3c-house1.jpg"
+    ],
+    "price": 3000000,
+    "poster": {
+      "$oid": "5fa75a8582e3ff033cdd9376"
+    },
+    "status": "approved",
+    "type_of_post": "share",
+    "statistics": {
+      "viewCount": 1
+    }
+  },
+  {
+    "_id": {
+      "$oid": "5fc0bd5f13e6956dc3ebbb26"
+    },
+    "title": "Share my current room",
+    "type": "share_room",
+    "address": {
+      "name": "Cái Khế, Quận Ninh Kiều, Can Tho, Vietnam",
+      "geocode": {
+        "longitude": 105.78303613066267,
+        "latitude": 10.04496002116825
+      }
+    },
+    "detail": {
+      "parking": "yes",
+      "internet": "some_in_rent",
+      "total_bedrooms": 4,
+      "total_bathrooms": 3,
+      "max_people_live_with": 3,
+      "toilets": "owned",
+      "furnishing": "flexible",
+      "bills": "some_in_rent",
+      "depositLength": "1",
+      "room_availability": {
+        "min_length_of_stay": 3,
+        "max_length_of_stay": 12,
+        "date_availability": 1606553199000
+      },
+      "except": "male_only"
+    },
+    "features": [
+      "air_conditioner",
+      "desk",
+      "door_lock",
+      "table",
+      "couch",
+      "chair",
+      "kitchenette"
+    ],
+    "description": "I am very cool but I dont like animals!",
+    "images": [
+      "http://104.209.148.218:4000/uploads/post-images/images-1606466887523-5fbf23228be9060f8f168d3c-room2.jpeg",
+      "http://104.209.148.218:4000/uploads/post-images/images-1606466888480-5fbf23228be9060f8f168d3c-room1.jpg"
+    ],
+    "price": 1000000,
+    "poster": {
+      "$oid": "5fa75a8582e3ff033cdd9376"
+    },
+    "status": "approved",
+    "type_of_post": "share"
+  },
+  {
+    "_id": {
+      "$oid": "5fc0be2013e695729bebbb6f"
+    },
+    "title": "Big house for rent",
+    "type": "share_whole_property",
+    "address": {
+      "name": "An Hòa, Quận Ninh Kiều, Can Tho, Vietnam",
+      "geocode": {
+        "longitude": 105.76911592860469,
+        "latitude": 10.05032283529975
+      }
+    },
+    "detail": {
+      "parking": "yes",
+      "internet": "some_in_rent",
+      "total_bedrooms": 5,
+      "total_bathrooms": 3,
+      "max_people_live_with": 2,
+      "toilets": "owned",
+      "furnishing": "flexible",
+      "bills": "not_in_rent",
+      "depositLength": "5",
+      "room_availability": {
+        "min_length_of_stay": 2,
+        "max_length_of_stay": 12,
+        "date_availability": 1607158213000
+      },
+      "except": "anyone"
+    },
+    "features": [
+      "air_conditioner",
+      "balcony",
+      "chair",
+      "couch",
+      "kitchenette",
+      "fan",
+      "desk",
+      "tv",
+      "wardrobe",
+      "door_lock"
+    ],
+    "description": "I am okay with every one! So please feel free to contact me! :DDDDD",
+    "images": [
+      "http://104.209.148.218:4000/uploads/post-images/images-1606467070758-5fbf23228be9060f8f168d3c-house3.jpg",
+      "http://104.209.148.218:4000/uploads/post-images/images-1606467071569-5fbf23228be9060f8f168d3c-house4.jpg"
+    ],
+    "price": 5000000,
+    "poster": {
+      "$oid": "5fa75a8582e3ff033cdd9376"
+    },
+    "status": "approved",
+    "type_of_post": "share",
+    "statistics": {
+      "viewCount": 2
+    }
+  },
+  {
+    "_id": {
+      "$oid": "5fc0bf3113e695b681ebbc0c"
+    },
+    "title": "1 phong nha tro con trong",
+    "type": "share_room",
+    "address": {
+      "name": "Thới Bình, Quận Ninh Kiều, Can Tho, Vietnam",
+      "geocode": {
+        "longitude": 105.77967496490841,
+        "latitude": 10.043554464548222
+      }
+    },
+    "detail": {
+      "parking": "yes",
+      "internet": "include_in_rent",
+      "total_bedrooms": 2,
+      "total_bathrooms": 2,
+      "max_people_live_with": 2,
+      "toilets": "owned",
+      "furnishing": "flexible",
+      "bills": "some_in_rent",
+      "depositLength": "6",
+      "room_availability": {
+        "min_length_of_stay": 8,
+        "max_length_of_stay": 12,
+        "date_availability": 1607158497000
+      },
+      "except": "anyone"
+    },
+    "features": [
+      "air_conditioner",
+      "desk",
+      "tv",
+      "door_lock",
+      "chair",
+      "kitchenette",
+      "fan"
+    ],
+    "description": "Vui long lien lac: 0888890987 de duoc huong dan chi tiet (gap Duc). Cam on.",
+    "images": [
+      "http://104.209.148.218:4000/uploads/post-images/images-1606467343038-5faa473ee8c44aace09b356f-nhatro2.jpg",
+      "http://104.209.148.218:4000/uploads/post-images/images-1606467344264-5faa473ee8c44aace09b356f-nhatro.jpg"
+    ],
+    "price": 1500000,
+    "poster": {
+      "$oid": "5fa75a8582e3ff033cdd9376"
+    },
+    "status": "approved",
+    "type_of_post": "share",
+    "statistics": {
+      "viewCount": 1
+    }
+  },
+  {
+    "_id": {
+      "$oid": "5fc0c00d13e69508f6ebbc41"
+    },
+    "title": "Con trong 1 phong ngu",
+    "type": "share_room_in_house",
+    "address": {
+      "name": "Hưng Phú, Quận Cái Răng, Can Tho, Vietnam",
+      "geocode": {
+        "longitude": 105.78341569206378,
+        "latitude": 10.033287459530632
+      }
+    },
+    "detail": {
+      "parking": "yes",
+      "internet": "include_in_rent",
+      "total_bedrooms": 2,
+      "total_bathrooms": 3,
+      "max_people_live_with": 3,
+      "toilets": "owned",
+      "furnishing": "flexible",
+      "bills": "some_in_rent",
+      "depositLength": "5",
+      "room_availability": {
+        "min_length_of_stay": 4,
+        "max_length_of_stay": 12,
+        "date_availability": 1606726753000
+      },
+      "except": "anyone"
+    },
+    "features": ["air_conditioner", "fan", "kitchenette", "door_lock"],
+    "description": "Vui long lien he 09876390287 de muon phong!",
+    "images": [
+      "http://104.209.148.218:4000/uploads/post-images/images-1606467565555-5faa473ee8c44aace09b356f-phong_ngu_2.jpg",
+      "http://104.209.148.218:4000/uploads/post-images/images-1606467568826-5faa473ee8c44aace09b356f-phong_ngu_1.jpg"
+    ],
+    "price": 2500000,
+    "poster": {
+      "$oid": "5fa75a8582e3ff033cdd9376"
+    },
+    "status": "approved",
+    "type_of_post": "share",
+    "statistics": {
+      "viewCount": 2
+    }
+  },
+  {
+    "_id": {
+      "$oid": "5fc0c0a513e6951074ebbca6"
+    },
+    "title": "Nha cap 4 cho muon gia re",
+    "type": "share_whole_property",
+    "address": {
+      "name": "An Bình, Quận Ninh Kiều, Can Tho, Vietnam",
+      "geocode": {
+        "longitude": 105.7660559670822,
+        "latitude": 10.032806946674901
+      }
+    },
+    "detail": {
+      "parking": "yes",
+      "internet": "some_in_rent",
+      "total_bedrooms": 2,
+      "total_bathrooms": 3,
+      "max_people_live_with": 2,
+      "toilets": "owned",
+      "furnishing": "flexible",
+      "bills": "some_in_rent",
+      "depositLength": "3",
+      "room_availability": {
+        "min_length_of_stay": 3,
+        "max_length_of_stay": 4,
+        "date_availability": 1607158905000
+      },
+      "except": "anyone"
+    },
+    "features": [
+      "air_conditioner",
+      "chair",
+      "couch",
+      "kitchenette",
+      "fan",
+      "wardrobe",
+      "tv",
+      "desk",
+      "door_lock",
+      "table"
+    ],
+    "description": "Nha cap 4 gia re cho muon!",
+    "statistics": {
+      "viewCount": 3
+    },
+    "images": [
+      "http://104.209.148.218:4000/uploads/post-images/images-1606467732053-5faa473ee8c44aace09b356f-nhacap4.jpg"
+    ],
+    "price": 3500000,
+    "poster": {
+      "$oid": "5fa75a8582e3ff033cdd9376"
+    },
+    "status": "approved",
+    "type_of_post": "share"
+  },
+  {
+    "_id": {
+      "$oid": "5fc460fe602438d24107f913"
+    },
+    "title": "Big house need sharing",
+    "type": "share_whole_property",
+    "address": {
+      "name": "Cái Khế, Quận Cờ Đỏ, Cần Thơ, Vietnam",
+      "geocode": {
+        "longitude": 105.7846671000007,
+        "latitude": 10.045995900840246
+      }
+    },
+    "detail": {
+      "parking": "yes",
+      "internet": "some_in_rent",
+      "total_bedrooms": 4,
+      "total_bathrooms": 3,
+      "max_people_live_with": 3,
+      "toilets": "owned",
+      "furnishing": "flexible",
+      "bills": "some_in_rent",
+      "depositLength": "2",
+      "room_availability": {
+        "min_length_of_stay": 1,
+        "max_length_of_stay": 12,
+        "date_availability": 1606552973000
+      },
+      "except": "anyone"
+    },
+    "features": [
+      "air_conditioner",
+      "balcony",
+      "chair",
+      "couch",
+      "table",
+      "kitchenette",
+      "fan",
+      "wardrobe",
+      "tv",
+      "desk",
+      "door_lock"
+    ],
+    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. ",
+    "images": [
+      "http://104.209.148.218:4000/uploads/post-images/images-1606466645683-5fbf23228be9060f8f168d3c-house2.jpg",
+      "http://104.209.148.218:4000/uploads/post-images/images-1606466646505-5fbf23228be9060f8f168d3c-house1.jpg"
+    ],
+    "price": 3000000,
+    "poster": {
+      "$oid": "5fa75a8582e3ff033cdd9376"
+    },
+    "status": "approved",
+    "type_of_post": "share",
+    "statistics": {
+      "viewCount": 7
+    }
+  },
+  {
+    "_id": {
+      "$oid": "5fcf333b23251d4e9646941b"
+    },
+    "title": "1 phong ngu con trong ",
+    "type": "share_room_in_house",
+    "address": {
+      "name": "Huyện Dương Minh Châu, Tây Ninh, Vietnam",
+      "geocode": {
+        "longitude": 106.16304565878129,
+        "latitude": 10.787204879928229
+      }
+    },
+    "detail": {
+      "parking": "yes",
+      "internet": "include_in_rent",
+      "total_bedrooms": 0,
+      "total_bathrooms": 0,
+      "max_people_live_with": 1,
+      "toilets": "owned",
+      "furnishing": "flexible",
+      "bills": "some_in_rent",
+      "depositLength": "2",
+      "room_availability": {
+        "min_length_of_stay": 3,
+        "max_length_of_stay": 12,
+        "date_availability": 1607587304000
+      },
+      "except": "anyone"
+    },
+    "features": ["air_conditioner"],
+    "description": "I am cool with everyone!",
+    "images": [
+      "http://104.209.148.218:4000/uploads/post-images/images-1607414519326-5fbf23228be9060f8f168d3c-interior-has-armchair-empty-white-wall.jpg"
+    ],
+    "price": 2000000,
+    "poster": {
+      "$oid": "5fbf23228be9060f8f168d3c"
+    },
+    "status": "approved",
+    "type_of_post": "share",
+    "statistics": {
+      "viewCount": 3
+    }
+  },
+  {
+    "_id": {
+      "$oid": "5fef532b76b1994617b4405d"
+    },
+    "title": "I need to share a room in my house",
+    "type": "share_room_in_house",
+    "address": {
+      "name": "Thới Bình, Quận Ninh Kiều, Can Tho, Vietnam",
+      "geocode": {
+        "longitude": 105.7641294243919,
+        "latitude": 10.02954844797074
+      }
+    },
+    "detail": {
+      "parking": "yes",
+      "internet": "some_in_rent",
+      "total_bedrooms": 0,
+      "total_bathrooms": 0,
+      "max_people_live_with": 2,
+      "toilets": "owned",
+      "furnishing": "flexible",
+      "bills": "some_in_rent",
+      "depositLength": "2",
+      "room_availability": {
+        "min_length_of_stay": 2,
+        "max_length_of_stay": 7,
+        "date_availability": 1609603548000
+      },
+      "except": "anyone"
+    },
+    "features": ["air_conditioner", "balcony", "kitchenette", "door_lock"],
+    "description": "Hello, I am duc. This accommodation is good for office and very efficient.",
+    "images": [
+      "http://104.209.148.218:4000/uploads/post-images/images-1609517957027-5faa473ee8c44aace09b356f-interior-has-armchair-empty-white-wall.jpg"
+    ],
+    "price": 2000000,
+    "poster": {
+      "$oid": "5faa473ee8c44aace09b356f"
+    },
+    "status": "approved",
+    "type_of_post": "share",
+    "statistics": {
+      "viewCount": 0
+    }
+  }
+]

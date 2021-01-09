@@ -94,6 +94,7 @@ class NeedPost extends BaseModel {
     try {
       const query = {
         poster: userID,
+        status: { $ne: PostStatus.DELETED },
         // status: PostStatus.PENDING, get all of status
       };
       const result = await this.collection
