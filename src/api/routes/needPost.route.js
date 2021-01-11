@@ -1,5 +1,8 @@
 const Router = require("express").Router();
-const { makeSureLoggedIn } = require("../middlewares/auth.middleware");
+const {
+  makeSureLoggedIn,
+  makeSureAdmin,
+} = require("../middlewares/auth.middleware");
 
 const {
   addPost,
@@ -11,6 +14,8 @@ const {
   createNewReactionOnNeedPost,
   updatePostById,
   getPostsOfCurrentUser,
+  getDataCount,
+  getAllPostByType,
 } = require("../controllers/needPost.controller");
 
 const {
@@ -27,9 +32,17 @@ Router.route("/").post(makeSureLoggedIn, addPost);
 
 Router.route("/").get(makeSureLoggedIn, getPostsByUser);
 
+Router.route("/count").get(makeSureLoggedIn, getDataCount);
+
 Router.route("/me").get(makeSureLoggedIn, getPostsOfCurrentUser);
 
 Router.route("/all").get(getAllNeedPost);
+
+Router.route("/type/:type").get(
+  makeSureLoggedIn,
+  makeSureAdmin,
+  getAllPostByType
+);
 
 Router.route("/search").get(searchNeedPosts);
 

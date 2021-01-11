@@ -3,6 +3,11 @@ const httpStatus = require("http-status");
 const _ = require("lodash");
 const Model = require("../models");
 
+const {
+  UserRolesEnum,
+  UserStatusEnum,
+  EnvHostingEnum,
+} = require("../../config/config.enum");
 const makeSureLoggedIn = (req, res, next) => {
   passport.authenticate("jwt", (error, user, info) => {
     if (error) {
@@ -103,8 +108,28 @@ const checkCredentials = async (req, res, next) => {
   }
 };
 
+const makeSureAdmin = (req, res, next) => {
+  const role = req.user.role;
+  const response = {
+    code: httpStatus.FORBIDDEN,
+    message: "You have no access to this resource",
+    allowers: [UserRolesEnum.ADMIN],
+  };
+
+  // if (env === EnvHostingEnum.PRODUCTION) {
+  //   delete response.allowers;
+  // }
+
+  if (role !== UserRolesEnum.ADMIN) {
+    return res.status(response.code).json(response).end();
+  }
+
+  return next();
+};
+
 module.exports = {
   makeSureLoggedIn,
   checkUserPassword,
   checkUserEmail,
+  makeSureAdmin,
 };

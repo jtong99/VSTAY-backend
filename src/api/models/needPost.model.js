@@ -121,6 +121,42 @@ class NeedPost extends BaseModel {
     }
   }
 
+  async getTotalCount(projection = {}) {
+    try {
+      const getPending = await this.collection.find(
+        { status: { $eq: "pending" } },
+        { projection: projection }
+      );
+      const totalPending = await getPending.count();
+
+      const getApproved = await this.collection.find(
+        { status: { $eq: "approved" } },
+        { projection: projection }
+      );
+      const totalApproved = await getApproved.count();
+
+      const getRejected = await this.collection.find(
+        { status: { $eq: "rejected" } },
+        { projection: projection }
+      );
+      const totalRejected = await getRejected.count();
+      const returnObject = {
+        totalPending,
+        totalApproved,
+        totalRejected,
+      };
+      return returnObject;
+    } catch (error) {
+      throw new APIError({
+        message: "Failed on getting count data",
+        status: httpStatus.INTERNAL_SERVER_ERROR,
+        stack: error.stack,
+        isPublic: false,
+        errors: error.errors,
+      });
+    }
+  }
+
   async getAllNeedPost(pagination, sort, projection = {}) {
     try {
       const result = await this.collection
@@ -130,6 +166,33 @@ class NeedPost extends BaseModel {
         .limit(pagination.pageSize);
       const count = await result.count();
       const resultArray = await result.toArray();
+      const returnObject = {
+        total: count ? count : 0,
+        resultArray: resultArray ? resultArray : [],
+      };
+      return returnObject;
+    } catch (error) {
+      throw new APIError({
+        message: "Failed on getting posts",
+        status: httpStatus.INTERNAL_SERVER_ERROR,
+        stack: error.stack,
+        isPublic: false,
+        errors: error.errors,
+      });
+    }
+  }
+
+  async getPostByType(type, pagination, sort, projection = {}) {
+    try {
+      const result = await this.collection
+        .find({ status: { $eq: type } }, { projection: projection })
+        .sort(sort)
+        .skip(pagination.pageNumber * pagination.pageSize)
+        .limit(pagination.pageSize);
+      const count = await result.count();
+      const resultArray = await result.toArray();
+
+      // console.log(resultArray);
       const returnObject = {
         total: count ? count : 0,
         resultArray: resultArray ? resultArray : [],

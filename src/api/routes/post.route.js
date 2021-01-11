@@ -1,5 +1,8 @@
 const Router = require("express").Router();
-const { makeSureLoggedIn } = require("../middlewares/auth.middleware");
+const {
+  makeSureLoggedIn,
+  makeSureAdmin,
+} = require("../middlewares/auth.middleware");
 
 const {
   addPost,
@@ -14,6 +17,8 @@ const {
   updatePostStatus,
   updatePostById,
   getPostByCurrentUser,
+  getAllPostByType,
+  getDataCount,
 } = require("../controllers/post.controller");
 
 const {
@@ -39,7 +44,15 @@ Router.route("/me").get(makeSureLoggedIn, getPostByCurrentUser);
 
 Router.route("/all").get(getAllPost);
 
+Router.route("/type/:type").get(
+  makeSureLoggedIn,
+  makeSureAdmin,
+  getAllPostByType
+);
+
 Router.route("/search").get(searchSharePosts);
+
+Router.route("/count").get(makeSureLoggedIn, getDataCount);
 
 Router.route("/status").patch(makeSureLoggedIn, updatePostStatus);
 

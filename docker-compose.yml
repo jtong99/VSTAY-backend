@@ -30,7 +30,6 @@ services:
       - DB_PORT=27017
     command: mongod
   elasticsearch:
-    user: $USER
     image: docker.elastic.co/elasticsearch/elasticsearch:7.9.3
     container_name: vstay_elasticsearch
     environment:
