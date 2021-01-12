@@ -344,6 +344,7 @@ class Post extends BaseModel {
     try {
       const query = { _id: { $eq: ObjectId(id) } };
       const fitData = { status };
+      console.log(fitData);
       const data = {
         $set: fitData,
       };
@@ -363,12 +364,13 @@ class Post extends BaseModel {
     }
   }
 
-  async updateById(_id, userId, rawData) {
+  async updateById(id, userId, rawData) {
     try {
-      const query = {
-        _id: _id,
-        poster: userId,
-      };
+      const query = { _id: { $eq: ObjectId(id) } };
+      // const query = {
+      //   _id: _id,
+      //   poster: userId,
+      // };
       const data = {
         $set: rawData,
       };

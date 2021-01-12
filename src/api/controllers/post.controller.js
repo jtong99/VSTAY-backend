@@ -835,6 +835,7 @@ module.exports.updatePostStatus = async (req, res, next) => {
       })
       .end();
   } catch (error) {
+    console.log(error);
     next(error);
   }
 };

@@ -670,9 +670,7 @@ module.exports.updatePostById = async (req, res, next) => {
     const { db, ESClient } = req.app.locals;
     const { NeedPost } = new Model({ db });
     const { NeedESPost } = new ESModel({ ESClient });
-
     const result = await NeedPost.updateById(postID, userId, rawData);
-    // console.log(result);
     if (result === null || result === undefined || !result) {
       return res
         .status(httpStatus.NOT_FOUND)

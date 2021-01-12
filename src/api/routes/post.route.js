@@ -40,6 +40,8 @@ Router.route("/upload-images").post(
 
 Router.route("/").get(makeSureLoggedIn, getPostsByUser);
 
+Router.route("/status").patch(makeSureLoggedIn, updatePostStatus);
+
 Router.route("/me").get(makeSureLoggedIn, getPostByCurrentUser);
 
 Router.route("/all").get(getAllPost);
@@ -53,8 +55,6 @@ Router.route("/type/:type").get(
 Router.route("/search").get(searchSharePosts);
 
 Router.route("/count").get(makeSureLoggedIn, getDataCount);
-
-Router.route("/status").patch(makeSureLoggedIn, updatePostStatus);
 
 Router.route("/related-location/:postID").get(
   makeSureLoggedIn,

@@ -3,6 +3,8 @@ const { Models } = require("../../config/vars");
 const BaseModel = require("../../used/base.model");
 const { toObjectId } = require("../helpers");
 const { PostStatus } = require("../../config/config.enum");
+const { ObjectId } = require("mongodb");
+const APIError = require("../utils/APIErr");
 
 class NeedPost extends BaseModel {
   constructor(db) {
@@ -263,18 +265,21 @@ class NeedPost extends BaseModel {
     }
   }
 
-  async updateById(_id, userId, rawData) {
+  async updateById(id, userId, rawData) {
     try {
-      const query = {
-        _id: _id,
-        poster: userId,
-      };
+      const query = { _id: { $eq: ObjectId(id) } };
+      // const query = {
+      //   _id: _id,
+      //   poster: userId,
+      // };
+      console.log(rawData);
       const data = {
         $set: rawData,
       };
       const result = await this.collection.findOneAndUpdate(query, data, {
         returnOriginal: false,
       });
+      console.log(result);
       return result.value;
     } catch (error) {
       throw new APIError({
