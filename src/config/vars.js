@@ -73,6 +73,17 @@ module.exports.Models = {
   NEED_POST: "needPost",
 };
 
+module.exports.migration = {
+  urlMongo:
+    env === EnvHostingEnum.DEVELOPMENT
+      ? "mongodb://localhost:27017/v-stay-db?readPreference=primary&authSource=admin&appname=MongoDB%20Compass&ssl=false"
+      : "mongodb://duc:minhduc1909@52.167.219.69:9000/v-stay-db?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&ssl=false",
+  urlElastic:
+    env === EnvHostingEnum.DEVELOPMENT
+      ? "http://localhost:9200"
+      : "http://elasticsearch:9200",
+};
+
 module.exports.services = {
   sendgrid: {
     key: process.env.SENDGRID_API_KEY,

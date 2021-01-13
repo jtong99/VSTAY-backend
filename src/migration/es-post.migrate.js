@@ -4,10 +4,12 @@ const { ObjectID } = require("mongodb");
 const { Client } = require("@elastic/elasticsearch");
 const path = require("path");
 
+const { urlElastic } = require("../config/vars").migration;
+
 const { ES } = require("../config/vars");
 
 const ESClient = new Client({
-  node: "http://localhost:9200",
+  node: urlElastic,
 });
 
 function readData(filename) {

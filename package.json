@@ -13,6 +13,7 @@
     "merge:production": "git checkout production && git pull && git merge master && git push && git checkout master",
     "migrate:post": "node src/migration post",
     "migrate:needPost": "node src/migration needPost",
+    "migrate:user": "node src/migration users",
     "migrate:es-post": "node src/migration/es-post.migrate.js"
   },
   "lint-staged": {

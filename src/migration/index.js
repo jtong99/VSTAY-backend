@@ -4,7 +4,7 @@ const path = require("path");
 const chalk = require("chalk");
 const { enumToArray } = require("../api/helpers/enum");
 const { Models } = require("../config/vars");
-
+const { urlMongo } = require("../config/vars").migration;
 const { name, uri } = require("../config/vars").database;
 
 function MongoParse(query) {
@@ -40,9 +40,8 @@ function prettyData(data) {
 
 function importData(rawData, collection) {
   const data = prettyData(rawData);
-  console.log(uri);
   MongoClient.connect(
-    "mongodb://localhost:27017/v-stay-db?readPreference=primary&authSource=admin&appname=MongoDB%20Compass&ssl=false",
+    urlMongo,
     { useNewUrlParser: true, useUnifiedTopology: true },
     (err, client) => {
       if (err) throw err;
