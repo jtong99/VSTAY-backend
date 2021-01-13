@@ -178,7 +178,7 @@ class Post extends BaseModel {
     try {
       const result = await this.collection
         .find(
-          { status: { $ne: PostStatus.DELETED } },
+          { status: { $eq: PostStatus.APPROVED } },
           { projection: projection }
         )
         .sort(sort)
