@@ -49,6 +49,8 @@ services:
       - ./data/elastic:/usr/share/elasticsearch/data
   kibana:
     image: docker.elastic.co/kibana/kibana:7.9.3
+    ports:
+      - "2000:5601"
     container_name: vstay_kibana
     logging:
       driver: none
