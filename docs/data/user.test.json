@@ -1,137 +1,242 @@
 [
   {
     "_id": {
-      "$oid": "5f469bc50861076f7376d39c"
+      "$oid": "5faa473ee8c44aace09b356f"
+    },
+    "email": "shanee1998@gmail.com",
+    "name": "Tong Shan",
+    "password": "$2a$10$taSqRmeZ/T8rS/OXnd36ROP61CYdJDEvmin1x3j3d68kh3L6FFXEy",
+    "role": "admin",
+    "status": "free",
+    "about": "I like computer",
+    "avatar": "http://104.209.148.218:4000/uploads/avatars/avatar-1609524754851-5faa473ee8c44aace09b356f-1609524753778Max-R_Headshot (1).jpg",
+    "skills": [],
+    "social": {
+      "facebook": "https://www.facebook.com/shantong08/",
+      "linkedin": "",
+      "youtube": "",
+      "instagram": ""
+    },
+    "headline": "I am developer!",
+    "language": "",
+    "createdAt": {
+      "$date": "2020-11-10T07:54:38.408Z"
+    },
+    "updatedAt": {
+      "$date": "2021-01-01T18:12:37.068Z"
+    },
+    "lastActivity": {
+      "$date": "2021-01-13T02:14:18.435Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "5faa413ee8c44aace09b356f"
+    },
+    "email": "admin01@gmail.com",
+    "name": "Admin of VSTAY",
+    "password": "$2a$10$taSqRmeZ/T8rS/OXnd36ROP61CYdJDEvmin1x3j3d68kh3L6FFXEy",
+    "role": "admin",
+    "status": "active",
+    "about": "I like computer",
+    "avatar": "http://104.209.148.218:4000/uploads/avatars/avatar-1609524754851-5faa473ee8c44aace09b356f-1609524753778Max-R_Headshot (1).jpg",
+    "skills": [],
+    "social": {
+      "facebook": "https://www.facebook.com/shantong08/",
+      "linkedin": "",
+      "youtube": "",
+      "instagram": ""
+    },
+    "headline": "I am developer!",
+    "language": "",
+    "createdAt": {
+      "$date": "2020-11-10T07:54:38.408Z"
+    },
+    "updatedAt": {
+      "$date": "2021-01-01T18:12:37.068Z"
+    },
+    "lastActivity": {
+      "$date": "2021-01-13T02:14:18.435Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "5ff5de377ed76d5ae6db89a9"
     },
     "email": "test01@gmail.com",
-    "name": "Wyman",
-    "password": "$2y$12$acv3cAs.4j9QNfZsRQR3fO8tFtjziu3y65vaxEVW.kSfPQ9Pgk18O",
-    "createdAt": {
-      "$date": "2020-08-26T17:28:37.038Z"
-    },
-    "updatedAt": {
-      "$date": "2020-08-26T17:28:37.038Z"
-    },
-    "role": "freePop",
-    "avatar": "https://api.adorable.io/avatars/285/1598462917155@adorable.io",
+    "name": "Nguyễn Thanh Hải",
+    "password": "$2a$10$kvv/pX76fBv98N5c4gcQCuFZLchyyK6yT9cfW71vkqZwAqw.vZRcK",
+    "role": "free",
     "status": "active",
     "about": "",
+    "avatar": "https://gravatar.com/avatar/1c8e8a6e8d1fe52b782b280909abeb38?s=400&d=robohash&r=x",
     "skills": [],
     "social": {
       "facebook": "",
       "linkedin": "",
-      "youtube": ""
+      "youtube": "",
+      "instagram": ""
     },
     "headline": "",
     "language": "",
-    "lastActivity": "2020-12-02T16:10:29.875+00:00"
+    "createdAt": {
+      "$date": "2021-01-06T15:58:47.180Z"
+    },
+    "updatedAt": {
+      "$date": "2021-01-06T15:58:47.180Z"
+    },
+    "lastActivity": {
+      "$date": "2021-01-06T17:26:59.288Z"
+    }
   },
   {
     "_id": {
-      "$oid": "5f469bc508610763ef76d3f3"
+      "$oid": "5ff5de377ed76d5ae6db89a0"
     },
     "email": "test02@gmail.com",
-    "name": "Naomi",
-    "password": "$2y$12$acv3cAs.4j9QNfZsRQR3fO8tFtjziu3y65vaxEVW.kSfPQ9Pgk18O",
-    "createdAt": {
-      "$date": "2020-08-26T17:28:37.841Z"
-    },
-    "updatedAt": {
-      "$date": "2020-08-26T17:28:37.841Z"
-    },
-    "role": "freePop",
-    "avatar": "https://api.adorable.io/avatars/285/1598462917952@adorable.io",
+    "name": "Vĩnh Hoàng Ân",
+    "password": "$2a$10$kvv/pX76fBv98N5c4gcQCuFZLchyyK6yT9cfW71vkqZwAqw.vZRcK",
+    "role": "free",
     "status": "active",
     "about": "",
+    "avatar": "https://gravatar.com/avatar/3af8d53ea32efadb95fd5dc7a511a46f?s=400&d=robohash&r=x",
     "skills": [],
     "social": {
       "facebook": "",
       "linkedin": "",
-      "youtube": ""
+      "youtube": "",
+      "instagram": ""
     },
     "headline": "",
     "language": "",
-    "lastActivity": "2020-12-02T16:10:29.875+00:00"
+    "createdAt": {
+      "$date": "2021-01-06T15:58:47.180Z"
+    },
+    "updatedAt": {
+      "$date": "2021-01-06T15:58:47.180Z"
+    },
+    "lastActivity": {
+      "$date": "2021-01-06T17:26:59.288Z"
+    }
   },
   {
     "_id": {
-      "$oid": "5f469bc60861076ad476d44a"
+      "$oid": "5ff5de377ed76d5ae6db89a1"
+    },
+    "email": "test03@gmail.com",
+    "name": "Đỗ Minh Anh",
+    "password": "$2a$10$kvv/pX76fBv98N5c4gcQCuFZLchyyK6yT9cfW71vkqZwAqw.vZRcK",
+    "role": "free",
+    "status": "active",
+    "about": "",
+    "avatar": "https://gravatar.com/avatar/586fd768d48da748763d1ae192b59991?s=400&d=robohash&r=x",
+    "skills": [],
+    "social": {
+      "facebook": "",
+      "linkedin": "",
+      "youtube": "",
+      "instagram": ""
+    },
+    "headline": "",
+    "language": "",
+    "createdAt": {
+      "$date": "2021-01-06T15:58:47.180Z"
+    },
+    "updatedAt": {
+      "$date": "2021-01-06T15:58:47.180Z"
+    },
+    "lastActivity": {
+      "$date": "2021-01-06T17:26:59.288Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "5ff5de377ed76d5ae6db89a2"
     },
     "email": "test04@gmail.com",
-    "name": "Trudie",
-    "password": "$2y$12$acv3cAs.4j9QNfZsRQR3fO8tFtjziu3y65vaxEVW.kSfPQ9Pgk18O",
-    "createdAt": {
-      "$date": "2020-08-26T17:28:38.650Z"
-    },
-    "updatedAt": {
-      "$date": "2020-08-26T17:28:38.650Z"
-    },
-    "role": "freePop",
-    "avatar": "https://api.adorable.io/avatars/285/1598462918766@adorable.io",
+    "name": "Lý Minh Triết",
+    "password": "$2a$10$kvv/pX76fBv98N5c4gcQCuFZLchyyK6yT9cfW71vkqZwAqw.vZRcK",
+    "role": "free",
     "status": "active",
     "about": "",
+    "avatar": "https://gravatar.com/avatar/2b0652707d3946d68b342e1583b04cb4?s=400&d=robohash&r=x",
     "skills": [],
     "social": {
       "facebook": "",
       "linkedin": "",
-      "youtube": ""
+      "youtube": "",
+      "instagram": ""
     },
     "headline": "",
     "language": "",
-    "lastActivity": "2020-12-02T16:10:29.875+00:00"
+    "createdAt": {
+      "$date": "2021-01-06T15:58:47.180Z"
+    },
+    "updatedAt": {
+      "$date": "2021-01-06T15:58:47.180Z"
+    },
+    "lastActivity": {
+      "$date": "2021-01-06T17:26:59.288Z"
+    }
   },
   {
     "_id": {
-      "$oid": "5f469bc8086107524376d4e8"
+      "$oid": "5ff5de377ed76d5ae6db89a3"
     },
     "email": "test05@gmail.com",
-    "name": "Laila",
-    "password": "$2y$12$acv3cAs.4j9QNfZsRQR3fO8tFtjziu3y65vaxEVW.kSfPQ9Pgk18O",
-    "createdAt": {
-      "$date": "2020-08-26T17:28:40.135Z"
-    },
-    "updatedAt": {
-      "$date": "2020-08-26T17:28:40.135Z"
-    },
-    "role": "freePop",
-    "avatar": "https://api.adorable.io/avatars/285/1598462920252@adorable.io",
+    "name": "Giang Minh Toàn",
+    "password": "$2a$10$kvv/pX76fBv98N5c4gcQCuFZLchyyK6yT9cfW71vkqZwAqw.vZRcK",
+    "role": "free",
     "status": "active",
     "about": "",
+    "avatar": "https://gravatar.com/avatar/5e0147e085d6753cbba71351e86b20ce?s=400&d=robohash&r=x",
     "skills": [],
     "social": {
       "facebook": "",
       "linkedin": "",
-      "youtube": ""
+      "youtube": "",
+      "instagram": ""
     },
     "headline": "",
     "language": "",
-    "lastActivity": "2020-12-02T16:10:29.875+00:00"
+    "createdAt": {
+      "$date": "2021-01-06T15:58:47.180Z"
+    },
+    "updatedAt": {
+      "$date": "2021-01-06T15:58:47.180Z"
+    },
+    "lastActivity": {
+      "$date": "2021-01-06T17:26:59.288Z"
+    }
   },
   {
     "_id": {
-      "$oid": "5f469bc9086107e24276d586"
+      "$oid": "5ff5de377ed76d5ae6db89a4"
     },
     "email": "test06@gmail.com",
-    "name": "Lue",
-    "password": "$2y$12$acv3cAs.4j9QNfZsRQR3fO8tFtjziu3y65vaxEVW.kSfPQ9Pgk18O",
-    "createdAt": {
-      "$date": "2020-08-26T17:28:41.602Z"
-    },
-    "updatedAt": {
-      "$date": "2020-08-26T17:28:41.602Z"
-    },
-    "role": "freePop",
-    "avatar": "https://api.adorable.io/avatars/285/1598462921722@adorable.io",
+    "name": "Ngô Bảo Lâm",
+    "password": "$2a$10$kvv/pX76fBv98N5c4gcQCuFZLchyyK6yT9cfW71vkqZwAqw.vZRcK",
+    "role": "free",
     "status": "active",
     "about": "",
+    "avatar": "https://gravatar.com/avatar/3edfd13a8e2ec0d6c1eebae365e20ca9?s=400&d=robohash&r=x",
     "skills": [],
     "social": {
       "facebook": "",
       "linkedin": "",
-      "youtube": ""
+      "youtube": "",
+      "instagram": ""
     },
     "headline": "",
     "language": "",
-    "lastActivity": "2020-12-02T16:10:29.875+00:00"
+    "createdAt": {
+      "$date": "2021-01-06T15:58:47.180Z"
+    },
+    "updatedAt": {
+      "$date": "2021-01-06T15:58:47.180Z"
+    },
+    "lastActivity": {
+      "$date": "2021-01-06T17:26:59.288Z"
+    }
   }
 ]
