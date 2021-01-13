@@ -55,6 +55,12 @@
     "type_of_post": "share",
     "statistics": {
       "viewCount": 1
+    },
+    "createdAt": {
+      "$date": "2021-01-01T09:01:18.848Z"
+    },
+    "updatedAt": {
+      "$date": "2021-01-02T09:01:18.848Z"
     }
   },
   {
@@ -80,6 +86,8 @@
       "furnishing": "flexible",
       "bills": "some_in_rent",
       "depositLength": "1",
+      "width": 10,
+      "length": 20,
       "room_availability": {
         "min_length_of_stay": 3,
         "max_length_of_stay": 12,
@@ -106,7 +114,16 @@
       "$oid": "5fa75a8582e3ff033cdd9376"
     },
     "status": "approved",
-    "type_of_post": "share"
+    "type_of_post": "share",
+    "statistics": {
+      "viewCount": 1
+    },
+    "createdAt": {
+      "$date": "2021-12-01T09:01:18.848Z"
+    },
+    "updatedAt": {
+      "$date": "2021-12-02T09:01:18.848Z"
+    }
   },
   {
     "_id": {
@@ -163,6 +180,12 @@
     "type_of_post": "share",
     "statistics": {
       "viewCount": 2
+    },
+    "createdAt": {
+      "$date": "2021-12-20T09:01:18.848Z"
+    },
+    "updatedAt": {
+      "$date": "2021-12-21T09:01:18.848Z"
     }
   },
   {
@@ -188,6 +211,8 @@
       "furnishing": "flexible",
       "bills": "some_in_rent",
       "depositLength": "6",
+      "width": 10,
+      "length": 20,
       "room_availability": {
         "min_length_of_stay": 8,
         "max_length_of_stay": 12,
@@ -217,6 +242,12 @@
     "type_of_post": "share",
     "statistics": {
       "viewCount": 1
+    },
+    "createdAt": {
+      "$date": "2021-12-10T09:01:18.848Z"
+    },
+    "updatedAt": {
+      "$date": "2021-12-11T09:01:18.848Z"
     }
   },
   {
@@ -263,6 +294,12 @@
     "type_of_post": "share",
     "statistics": {
       "viewCount": 2
+    },
+    "createdAt": {
+      "$date": "2021-12-09T09:01:18.848Z"
+    },
+    "updatedAt": {
+      "$date": "2021-12-10T09:01:18.848Z"
     }
   },
   {
@@ -319,7 +356,13 @@
       "$oid": "5fa75a8582e3ff033cdd9376"
     },
     "status": "approved",
-    "type_of_post": "share"
+    "type_of_post": "share",
+    "createdAt": {
+      "$date": "2021-12-09T09:01:18.848Z"
+    },
+    "updatedAt": {
+      "$date": "2021-12-10T09:01:18.848Z"
+    }
   },
   {
     "_id": {
@@ -377,6 +420,12 @@
     "type_of_post": "share",
     "statistics": {
       "viewCount": 7
+    },
+    "createdAt": {
+      "$date": "2021-12-09T09:01:18.848Z"
+    },
+    "updatedAt": {
+      "$date": "2021-12-10T09:01:18.848Z"
     }
   },
   {
@@ -422,6 +471,12 @@
     "type_of_post": "share",
     "statistics": {
       "viewCount": 3
+    },
+    "createdAt": {
+      "$date": "2021-12-09T09:01:18.848Z"
+    },
+    "updatedAt": {
+      "$date": "2021-12-10T09:01:18.848Z"
     }
   },
   {
@@ -466,7 +521,13 @@
     "status": "approved",
     "type_of_post": "share",
     "statistics": {
-      "viewCount": 0
+      "viewCount": 10
+    },
+    "createdAt": {
+      "$date": "2021-12-09T09:01:18.848Z"
+    },
+    "updatedAt": {
+      "$date": "2021-12-10T09:01:18.848Z"
     }
   }
 ]

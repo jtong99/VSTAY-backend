@@ -1,52 +1,131 @@
 [
   {
-    "title": "Big house need sharing",
-    "type": "share_whole_property",
-    "address": {
-      "name": "Cái Khế, Quận Cờ Đỏ, Cần Thơ, Vietnam",
-      "geocode": {
-        "longitude": 105.7846671000007,
-        "latitude": 10.045995900840246
-      }
+    "_id": {
+      "$oid": "5ffdcf2dc9ed470098d3a933"
     },
+    "about": {
+      "name": "Tong Minh Duc",
+      "age": 19,
+      "gender": "male"
+    },
+    "budget": 1000000,
+    "type": "share_room",
+    "employment_status": ["working_parttime"],
+    "length_of_stay": 4,
+    "life_style": ["lgbt"],
+    "location": {
+      "longitude": 105.78473705832121,
+      "latitude": 10.030564769743394,
+      "name": "An Lạc, Quận Ninh Kiều, Can Tho, Vietnam"
+    },
+    "move_date": 1610555542000,
     "detail": {
-      "parking": "yes",
-      "internet": "some_in_rent",
-      "total_bedrooms": 4,
-      "total_bathrooms": 3,
-      "max_people_live_with": 3,
-      "toilets": "owned",
+      "max_people_live_with": 1,
+      "toilets": "flexible",
       "furnishing": "flexible",
-      "bills": "some_in_rent",
-      "depositLength": "2",
-      "room_availability": {
-        "min_length_of_stay": 1,
-        "max_length_of_stay": 12,
-        "date_availability": 1606552973000
-      },
-      "except": "anyone"
+      "internet": "required"
     },
-    "features": [
-      "air_conditioner",
-      "balcony",
-      "chair",
-      "couch",
-      "table",
-      "kitchenette",
-      "fan",
-      "wardrobe",
-      "tv",
-      "desk",
-      "door_lock"
-    ],
-    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. ",
-    "images": [
-      "http://40.75.0.139:4000/uploads/post-images/images-1606466645683-5fbf23228be9060f8f168d3c-house2.jpg",
-      "http://40.75.0.139:4000/uploads/post-images/images-1606466646505-5fbf23228be9060f8f168d3c-house1.jpg"
-    ],
-    "price": 3000000,
-    "poster": "5fbf23228be9060f8f168d3c",
-    "status": "pending",
-    "type_of_post": "share"
+    "description": "asdfasdfasd",
+    "type_of_post": "need",
+    "poster": {
+      "$oid": "5fbf2736b25ea60095202bf9"
+    },
+    "status": "rejected",
+    "releasedAt": null,
+    "statistics": {
+      "viewCount": 3,
+      "likeCount": 0,
+      "dislikeCount": 0
+    },
+    "createdAt": {
+      "$date": "2021-01-12T16:32:45.907Z"
+    },
+    "updatedAt": "2021-01-12T17:31:45+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "5ffebe6773b9510012302f46"
+    },
+    "about": {
+      "name": "Nguyen Van A",
+      "age": 20,
+      "gender": "male"
+    },
+    "budget": "approved",
+    "type": "share_room",
+    "employment_status": ["working_parttime"],
+    "length_of_stay": 4,
+    "life_style": ["lgbt"],
+    "location": {
+      "longitude": 105.64444618018358,
+      "latitude": 10.073480629806063,
+      "name": "Quận Ô Môn, Can Tho, Vietnam"
+    },
+    "move_date": 1610616710000,
+    "detail": {
+      "max_people_live_with": 1,
+      "toilets": "flexible",
+      "furnishing": "flexible",
+      "internet": "required"
+    },
+    "description": "I want to find a house",
+    "type_of_post": "need",
+    "poster": {
+      "$oid": "5fbf2736b25ea60095202bf9"
+    },
+    "status": "approved",
+    "releasedAt": null,
+    "statistics": {
+      "viewCount": 1,
+      "likeCount": 0,
+      "dislikeCount": 0
+    },
+    "createdAt": {
+      "$date": "2021-01-13T09:33:27.468Z"
+    },
+    "updatedAt": "2021-01-13T09:36:52+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "5ffee4af46c834001252ceaf"
+    },
+    "about": {
+      "name": "Nguyen Van A",
+      "age": 20,
+      "gender": "male"
+    },
+    "budget": 2000000,
+    "type": "share_room",
+    "employment_status": ["working_parttime"],
+    "length_of_stay": 4,
+    "life_style": ["lgbt"],
+    "location": {
+      "longitude": 105.77005391616123,
+      "latitude": 10.045329629827485,
+      "name": "An Hòa, Quận Ninh Kiều, Can Tho, Vietnam"
+    },
+    "move_date": 1610626442000,
+    "detail": {
+      "max_people_live_with": 2,
+      "toilets": "flexible",
+      "furnishing": "flexible",
+      "internet": "required"
+    },
+    "description": "I would like to find a place to live for a long time. A widely room to live with the most comfortable.",
+    "type_of_post": "need",
+    "poster": {
+      "$oid": "5fbf2736b25ea60095202bf9"
+    },
+    "status": "approved",
+    "releasedAt": null,
+    "statistics": {
+      "viewCount": 0,
+      "likeCount": 0,
+      "dislikeCount": 0
+    },
+    "createdAt": {
+      "$date": "2021-01-13T12:16:47.891Z"
+    },
+    "updatedAt": "2021-01-13T12:17:08+00:00"
   }
 ]

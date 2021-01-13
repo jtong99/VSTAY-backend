@@ -40,9 +40,9 @@ function prettyData(data) {
 
 function importData(rawData, collection) {
   const data = prettyData(rawData);
-
+  console.log(uri);
   MongoClient.connect(
-    uri,
+    "mongodb://localhost:27017/v-stay-db?readPreference=primary&authSource=admin&appname=MongoDB%20Compass&ssl=false",
     { useNewUrlParser: true, useUnifiedTopology: true },
     (err, client) => {
       if (err) throw err;

@@ -1,12 +1,13 @@
 const fs = require("fs");
 const { ObjectID } = require("mongodb");
-const elasticsearch = require("elasticsearch");
+
+const { Client } = require("@elastic/elasticsearch");
 const path = require("path");
 
 const { ES } = require("../config/vars");
 
-const ESClient = new elasticsearch.Client({
-  hosts: [ES.uri],
+const ESClient = new Client({
+  node: "http://localhost:9200",
 });
 
 function readData(filename) {
@@ -64,7 +65,7 @@ const deleteIndex = async () => {
 };
 
 const makeIndex = async () => {
-  const result = ESClient.indices.create({
+  const result = await ESClient.indices.create({
     index: "share-posts",
   });
   return result;
@@ -302,50 +303,13 @@ const putMapping = async () => {
           },
         },
       },
-
-      video: {
-        properties: {
-          title: { type: "text" },
-          author: { type: "text" },
-          thumbnail: { type: "text" },
-          popWords: {
-            type: "text",
-          },
-          skills: { type: "text" },
-          description: { type: "text" },
-          releasedAt: { type: "date" },
-          createdAt: { type: "date" },
-          updatedAt: { type: "date" },
-          uploadStatus: { type: "keyword" },
-          source: { type: "text" },
-          categories: { type: "text" },
-          duration: { type: "long" },
-          features: {
-            type: "nested",
-            properties: {
-              name: { type: "keyword" },
-              value: { type: "keyword" },
-            },
-          },
-          statistics: {
-            type: "nested",
-            properties: {
-              viewCount: { type: "long" },
-              likeCount: { type: "long" },
-              dislikeCount: { type: "long" },
-              sharedCount: { type: "long" },
-            },
-          },
-        },
-      },
     },
   });
   return result;
 };
 
 const indexall = async (madebulk) => {
-  const result = ESClient.bulk({
-    maxRetries: 5,
+  const result = await ESClient.bulk({
     index: "share-posts",
     type: "share-post",
     body: madebulk,
@@ -373,19 +337,24 @@ const makebulk = async (data) => {
 };
 
 const main = async () => {
-  const data = readData("share-posts");
-  const parsedData = prettyData(data);
+  const data = readData("post");
 
-  const deleteResult = await deleteIndex();
-  console.log(deleteResult);
-  const makeResult = await makeIndex();
-  console.log(makeResult);
-  const putResult = await putMapping();
-  console.log(putResult);
-  const madebulk = await makebulk(parsedData);
-  console.log(madebulk);
-  const indexAll = await indexall(madebulk);
-  console.log(indexAll);
+  const parsedData = prettyData(data);
+  // console.log(parsedData);
+  try {
+    const deleteResult = await deleteIndex();
+    console.log(deleteResult);
+    const makeResult = await makeIndex();
+    console.log(makeResult);
+    const putResult = await putMapping();
+    console.log(putResult);
+    const madebulk = await makebulk(parsedData);
+    console.log(madebulk);
+    const indexAll = await indexall(madebulk);
+    console.log(indexAll);
+  } catch (error) {
+    console.log(error.body.error);
+  }
 };
 
 main();
