@@ -1,8 +1,6 @@
-V-stay backend
+VSTAY backend
 Defined scripts
 Start app on container in dev mode on port 4000:
-
-npm run docker:dev
 
 ## Requirements
 
@@ -45,29 +43,10 @@ Targets: name of functions, attributes or objects...
 - Always run app with defined scripts.
 - Commit with the messages point to what you have been done within that commit.
 
-## Copy .env
+## Start server
 
 ```
 cp .env.example .env
-```
-
-## Deploy instructions
-
-Server connection
-
-```
-ssh duc-root@40.75.0.139
-```
-
-Password:
-
-```
-Minhduc1909@
-```
-
-Sendgrid infor
-
-```
-tmduc0908@gmail.com
-tongminhduc1909@
+npm install
+npm run docker:dev
 ```
